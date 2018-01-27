@@ -1,0 +1,24 @@
+{
+    "name": "foostart/package-post",
+    "description": "Manage post",
+    "keywords": [
+        "foostart",
+        "laravel 5 package post"
+    ],
+    "authors": [
+        {
+            "name": "FooStart",
+            "email": "foostart.com@gmail.com",
+            "homepage": "http://foostart.com"
+        }
+    ],
+    "license": "MIT",
+    "require": {
+    },
+    "autoload": {
+        "psr-4": {
+            "Foostart\\Post\\": "/"
+        }
+    },
+    "minimum-stability": "dev"
+}
