@@ -23,24 +23,24 @@
 
     <!--TAB MENU-->
     <ul class="nav nav-tabs">
-        <!--MENU 1-->
+        <!--BASIC-->
         <li class="active">
             <a data-toggle="tab" href="#menu_1">
-                {!! trans($plang_admin.'.tabs.menu_1') !!}
+                {!! trans($plang_admin.'.tabs.basic') !!}
             </a>
         </li>
 
-        <!--MENU 2-->
+        <!--ADVANCED-->
         <li>
             <a data-toggle="tab" href="#menu_2">
-                {!! trans($plang_admin.'.tabs.menu_2') !!}
+                {!! trans($plang_admin.'.tabs.advance') !!}
             </a>
         </li>
 
-        <!--MENU 3-->
+        <!--OTHER-->
         <li>
             <a data-toggle="tab" href="#menu_3">
-                {!! trans($plang_admin.'.tabs.menu_3') !!}
+                {!! trans($plang_admin.'.tabs.other') !!}
             </a>
         </li>
     </ul>
@@ -49,10 +49,10 @@
     <!--TAB CONTENT-->
     <div class="tab-content">
 
-        <!--MENU 1-->
+        <!--BASIC-->
         <div id="menu_1" class="tab-pane fade in active">
 
-            <!--post NAME-->
+            <!--POST NAME-->
             @include('package-category::admin.partials.input_text', [
                 'name' => 'post_name',
                 'id' => 'post_name',
@@ -61,7 +61,7 @@
                 'description' => trans($plang_admin.'.descriptions.name'),
                 'errors' => $errors,
             ])
-            <!--/post NAME-->
+            <!--/POST NAME-->
 
             <!--POST SLUG-->
             @include('package-category::admin.partials.input_slug', [
@@ -75,23 +75,70 @@
             ])
             <!--/POST NAME-->
 
-            <!-- LIST OF CATEGORIES -->
-            @include('package-category::admin.partials.select_single', [
-            'name' => 'category_id',
-            'label' => trans($plang_admin.'.labels.category'),
-            'items' => $categories,
-            'value' => @$itemds->category_id,
-            'description' => trans($plang_admin.'.descriptions.category', [
-                                'href' => URL::route('categories.list', ['_key' => $context->context_key])
-                                ]),
-            'errors' => $errors,
+            <div class="row">
+
+               <div class='col-md-6'>
+
+                    <!-- LIST OF CATEGORIES -->
+                    @include('package-category::admin.partials.select_single', [
+                        'name' => 'category_id',
+                        'label' => trans($plang_admin.'.labels.category'),
+                        'items' => $categories,
+                        'value' => @$item->category_id,
+                        'description' => trans($plang_admin.'.descriptions.category', [
+                                     'href' => URL::route('categories.list', ['_key' => $context->context_key])
+                                     ]),
+                        'errors' => $errors,
+                    ])
+
+               </div>
+
+                <div class='col-md-6'>
+
+                    <!-- LIST OF CATEGORIES -->
+                    @include('package-category::admin.partials.select_single', [
+                        'name' => 'slideshow_id',
+                        'label' => trans($plang_admin.'.labels.slideshow'),
+                        'items' => $slideshow,
+                        'value' => @$item->slideshow_id,
+                        'description' => trans($plang_admin.'.descriptions.slideshow', [
+                                     'href' => URL::route('slideshows.list')
+                                     ]),
+                        'errors' => $errors,
+                    ])
+
+               </div>
+
+                <div class='col-md-6'>
+                    <!--STATUS-->
+                    @include('package-category::admin.partials.select_single', [
+                        'name' => 'status',
+                        'label' => trans($plang_admin.'.form.status'),
+                        'value' => @$item->post_status,
+                        'items' => $status,
+                        'description' => trans($plang_admin.'.descriptions.status'),
+                    ])
+                </div>
+
+            </div>
+
+            <!--POST DESCRIPTION-->
+            @include('package-category::admin.partials.textarea', [
+                'name' => 'post_description',
+                'label' => trans($plang_admin.'.labels.description'),
+                'value' => @$item->post_description,
+                'description' => trans($plang_admin.'.descriptions.description'),
+                'rows' => 70,
+                'tinymce' => true,
+                'errors' => $errors,
             ])
-            <!-- /LIST OF CATEGORIES -->
+            <!--/POST DESCRIPTION-->
+
         </div>
 
-        <!--MENU 2-->
+        <!--ADVANCED-->
         <div id="menu_2" class="tab-pane fade">
-            <!--post OVERVIEW-->
+            <!--POST OVERVIEW-->
             @include('package-category::admin.partials.textarea', [
             'name' => 'post_overview',
             'label' => trans($plang_admin.'.labels.overview'),
@@ -100,24 +147,13 @@
             'tinymce' => false,
             'errors' => $errors,
             ])
-            <!--/post OVERVIEW-->
+            <!--/POST OVERVIEW-->
 
-            <!--post DESCRIPTION-->
-            @include('package-category::admin.partials.textarea', [
-            'name' => 'post_description',
-            'label' => trans($plang_admin.'.labels.description'),
-            'value' => @$item->post_description,
-            'description' => trans($plang_admin.'.descriptions.description'),
-            'rows' => 50,
-            'tinymce' => true,
-            'errors' => $errors,
-            ])
-            <!--/post DESCRIPTION-->
         </div>
 
-        <!--MENU 3-->
+        <!--OTHER-->
         <div id="menu_3" class="tab-pane fade">
-            <!--post IMAGE-->
+            <!--POST IMAGE-->
             @include('package-category::admin.partials.input_image', [
             'name' => 'post_image',
             'label' => trans($plang_admin.'.labels.image'),
@@ -125,9 +161,9 @@
             'description' => trans($plang_admin.'.descriptions.image'),
             'errors' => $errors,
             ])
-            <!--/post IMAGE-->
+            <!--/POST IMAGE-->
 
-            <!--post FILES-->
+            <!--POST FILES-->
             @include('package-category::admin.partials.input_files', [
                 'name' => 'files',
                 'label' => trans($plang_admin.'.labels.files'),
@@ -135,7 +171,7 @@
                 'description' => trans($plang_admin.'.descriptions.files'),
                 'errors' => $errors,
             ])
-            <!--/post FILES-->
+            <!--/POST FILES-->
         </div>
 
     </div>

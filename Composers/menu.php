@@ -1,7 +1,7 @@
 <?php
 
 use LaravelAcl\Authentication\Classes\Menu\SentryMenuFactory;
-
+use Foostart\Category\Helpers\FooCategory;
 
 /*
 |-----------------------------------------------------------------------
@@ -33,6 +33,9 @@ View::composer([
         $view->with('plang_admin', $plang_admin);
         $view->with('plang_front', $plang_front);
 
+        $fooCategory = new FooCategory();
+        $key = $fooCategory->getContextKeyByRef('admin/posts');
+
         /**
          * $sidebar_items
          */
@@ -44,6 +47,10 @@ View::composer([
             trans('post-admin.sidebar.list') => [
                 "url" => URL::route('posts.list', []),
                 'icon' => '<i class="fa fa-list-ul" aria-hidden="true"></i>'
+            ],
+            trans('post-admin.sidebar.category') => [
+                'url'  => URL::route('categories.list',['_key='.$key]),
+                'icon' => '<i class="fa fa-sitemap" aria-hidden="true"></i>'
             ],
             trans('post-admin.sidebar.config') => [
                 "url" => URL::route('posts.config', []),

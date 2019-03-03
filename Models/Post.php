@@ -2,6 +2,7 @@
 
 use Foostart\Category\Library\Models\FooModel;
 use Illuminate\Database\Eloquent\Model;
+use Foostart\Comment\Models\Comment;
 
 class Post extends FooModel {
 
@@ -9,6 +10,7 @@ class Post extends FooModel {
      * @table categories
      * @param array $attributes
      */
+    public $user = NULL;
     public function __construct(array $attributes = array()) {
         //set configurations
         $this->setConfigs();
@@ -27,6 +29,7 @@ class Post extends FooModel {
             'post_name',
             'post_slug',
             'category_id',
+            'slideshow_id',
             'user_id',
             'user_full_name',
             'user_email',
@@ -49,6 +52,10 @@ class Post extends FooModel {
             ],
             'category_id' => [
                 'name' => 'category_id',
+                'type' => 'Int',
+            ],
+            'slideshow_id' => [
+                'name' => 'slideshow_id',
                 'type' => 'Int',
             ],
             'user_id' => [
@@ -79,6 +86,10 @@ class Post extends FooModel {
                 'name' => 'files',
                 'type' => 'Json',
             ],
+            'post_status' => [
+                'name' => 'status',
+                'type' => 'Int',
+            ],
         ];
 
         //check valid fields for inserting
@@ -87,6 +98,7 @@ class Post extends FooModel {
             'post_slug',
             'user_id',
             'category_id',
+            'slideshow_id',
             'user_full_name',
             'updated_at',
             'post_overview',
@@ -106,6 +118,11 @@ class Post extends FooModel {
         $this->valid_filter_fields = [
             'keyword',
             'status',
+            'category',
+            '_id',
+            'limit',
+            'post_id!',
+            'category_id',
         ];
 
         //primary key
@@ -139,7 +156,11 @@ class Post extends FooModel {
         $elo = $this->orderingFilters($params, $elo);
 
         //paginate items
-        $items = $this->paginateItems($params, $elo);
+        if ($this->is_pagination) {
+            $items = $this->paginateItems($params, $elo);
+        } else {
+            $items = $elo->get();
+        }
 
         return $items;
     }
@@ -173,6 +194,33 @@ class Post extends FooModel {
         return $item;
     }
 
+
+    public function getComments($post_id) {
+
+        // Get post
+        $params = array(
+            'id' => $post_id,
+        );
+        $post = $this->selectItem($params);
+
+        // Get comment by context
+        $params = array(
+            'context_name' => 'post',
+            'context_id' => $post_id,
+            'by_status' => true,
+        );
+        $obj_comment = new Comment();
+        $obj_comment->user = $this->user;
+        $comments = $obj_comment->selectItems($params);
+
+        $users_comments = $obj_comment->mapCommentArray($comments);
+        $post->cache_comments = json_encode($users_comments);
+        $post->cache_time = time();
+        $post->save();
+
+        return $users_comments;
+    }
+
     /**
      *
      * @param ARRAY $params list of parameters
@@ -198,9 +246,19 @@ class Post extends FooModel {
                 {
                     switch($column)
                     {
-                        case 'post_name':
+                        case 'category':
                             if (!empty($value)) {
-                                $elo = $elo->where($this->table . '.post_name', '=', $value);
+                                $elo = $elo->where($this->table . '.category_id', '=', $value);
+                            }
+                            break;
+                        case 'limit':
+                            if (!empty($value)) {
+                                $elo = $elo->limit($value);
+                            }
+                            break;
+                        case '_id':
+                            if (!empty($value)) {
+                                $elo = $elo->where($this->table . '.post_id', '!=', $value);
                             }
                             break;
                         case 'status':
@@ -269,7 +327,11 @@ class Post extends FooModel {
         }
         $field_status = $this->field_status;
 
-        $post = $this->selectItem($params);
+        //get post item by conditions
+        $_params = [
+            'id' => $id,
+        ];
+        $post = $this->selectItem($_params);
 
         if (!empty($post)) {
             $dataFields = $this->getDataFields($params, $this->fields);
@@ -277,8 +339,6 @@ class Post extends FooModel {
             foreach ($dataFields as $key => $value) {
                 $post->$key = $value;
             }
-
-            $post->$field_status = $this->status['publish'];
 
             $post->save();
 
@@ -332,6 +392,44 @@ class Post extends FooModel {
         }
 
         return FALSE;
+    }
+
+    public function getCoursesByCategoriesRoot($categories) {
+
+        $this->is_pagination = false;
+
+        if (!empty($categories)) {
+
+            //get courses of category root
+            $_params = [
+                'limit' => 9,
+                'category' => $categories->category_id,
+                'is_pagination' => false
+            ];
+            $categories->courses = $this->selectItems($_params);;
+
+            //get courses of category childs
+            foreach ($categories->childs as $key => $category) {
+                $ids = [$category->category_id => 1];
+                if (!empty($category->category_id_child_str)) {
+                    $ids += (array)json_decode($category->category_id_child_str);;
+                }
+                $ids = array_keys($ids);
+
+                //error
+                $_temp = $categories->childs[$key];
+                $_temp->courses = $this->getCouresByCategoryIds($ids);
+            }
+
+
+        }
+        return $categories;
+    }
+
+    public function getCouresByCategoryIds($ids) {
+        $courses = self::whereIn('category_id', $ids)
+                    ->paginate($this->perPage);
+        return $courses;
     }
 
 }
