@@ -12,3 +12,7 @@
 3. Language standard
 4. Add filters on table data
 5. Add token for prevent XSRF
+
+php artisan vendor:publish --provider="Foostart\Post\PostServiceProvider" --force
+
+php artisan vendor:publish --provider="Foostart\Slideshow\SlideshowServiceProvider" --force
