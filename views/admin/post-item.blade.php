@@ -66,8 +66,17 @@
                     {{ trans($plang_admin.'.columns.operations') }}
                 </span>
 
-                {!! Form::submit(trans($plang_admin.'.buttons.delete-in-trash'), array("class"=>"btn btn-danger pull-right delete btn-delete-all del-trash", 'name'=>'del-trash')) !!}
-                {!! Form::submit(trans($plang_admin.'.buttons.delete-forever'), array("class"=>"btn btn-warning pull-right delete btn-delete-all del-forever", 'name'=>'del-forever')) !!}
+                {!! Form::submit(trans($plang_admin.'.buttons.delete-in-trash'), array(
+                                                                            "class"=>"btn btn-danger pull-right delete btn-delete-all del-trash",
+                                                                            "title"=> trans($plang_admin.'.hint.delete-in-trash'),
+                                                                            'name'=>'del-trash'))
+                !!}
+                {!! Form::submit(trans($plang_admin.'.buttons.delete-forever'), array(
+                                                                            "class"=>"btn btn-warning pull-right delete btn-delete-all del-forever",
+                                                                            "title"=> trans($plang_admin.'.hint.delete-forever'),
+                                                                            'name'=>'del-forever'))
+                !!}
+            </th>
             </th>
 
             <!--DELETE-->
@@ -98,6 +107,7 @@
                 <!--OPERATOR-->
                 <td>
                     <!--comment-->
+                    @if(Route::has('comments.by_context'))
                     <a href="{!! URL::route('comments.by_context', [   'id' => $item->id,
                                                                        'context' => 'post',
                                                                        '_token' => csrf_token()
@@ -105,6 +115,7 @@
                             !!}">
                         <i class="fa fa-commenting" aria-hidden="true"></i>
                     </a>&nbsp;
+                    @endif
 
                     <!--edit-->
                     <a href="{!! URL::route('posts.edit', [   'id' => $item->id,
@@ -113,7 +124,7 @@
                             !!}">
                         <i class="fa fa-edit f-tb-icon"></i>
                     </a>&nbsp;
-                    
+
 
                     <!--copy-->
                     <a href="{!! URL::route('posts.copy',[    'cid' => $item->id,
@@ -161,5 +172,5 @@
 
 @section('footer_scripts')
     @parent
-    {!! HTML::script('packages/foostart/package-sample/js/form-table.js')  !!}
+    {!! HTML::script('packages/foostart/js/form-table.js')  !!}
 @stop
