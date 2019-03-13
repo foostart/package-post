@@ -252,7 +252,11 @@ class PostAdminController extends FooController {
         $config_path = realpath(base_path('config/package-post.php'));
         $package_path = realpath(base_path('vendor/foostart/package-post'));
 
-        $config_bakup = realpath($package_path.'/storage/backup/config');
+        $config_bakup = $package_path.'/storage/backup/config';
+        if (!file_exists($config_bakup)) {
+            mkdir($config_bakup, 0755    , true);
+        }
+        $config_bakup = realpath($config_bakup);
 
         if ($version = $request->get('v')) {
             //load backup config
@@ -295,14 +299,20 @@ class PostAdminController extends FooController {
         // display view
         $langs = config('package-post.langs');
         $lang_paths = [];
+        $package_path = realpath(base_path('vendor/foostart/package-post'));
 
         if (!empty($langs) && is_array($langs)) {
             foreach ($langs as $key => $value) {
                 $lang_paths[$key] = realpath(base_path('resources/lang/'.$key.'/post-admin.php'));
+
+                $key_backup = $package_path.'/storage/backup/lang/'.$key;
+
+                if (!file_exists($key_backup)) {
+                    mkdir($key_backup, 0755    , true);
+                }
             }
         }
 
-        $package_path = realpath(base_path('vendor/foostart/package-post'));
 
         $lang_bakup = realpath($package_path.'/storage/backup/lang');
         $lang = $request->get('lang')?$request->get('lang'):'en';
