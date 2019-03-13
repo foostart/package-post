@@ -1,13 +1,15 @@
 -- phpMyAdmin SQL Dump
--- version 4.5.5.1
--- http://www.phpmyadmin.net
+-- version 4.8.3
+-- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1
--- Generation Time: Dec 27, 2017 at 09:47 AM
--- Server version: 5.7.11
--- PHP Version: 7.0.4
+-- Host: 127.0.0.1:3306
+-- Generation Time: Mar 13, 2019 at 06:50 AM
+-- Server version: 5.7.23
+-- PHP Version: 7.0.32
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET AUTOCOMMIT = 0;
+START TRANSACTION;
 SET time_zone = "+00:00";
 
 
@@ -23,42 +25,33 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Table structure for table `samples`
+-- Table structure for table `posts`
 --
 
-CREATE TABLE `samples` (
-  `sample_id` int(11) NOT NULL,
+DROP TABLE IF EXISTS `posts`;
+CREATE TABLE IF NOT EXISTS `posts` (
+  `post_id` int(11) NOT NULL AUTO_INCREMENT,
   `user_id` int(11) DEFAULT NULL,
+  `user_email` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `user_full_name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `category_id` int(11) DEFAULT NULL,
-  `sample_name` varchar(255) CHARACTER SET utf8 DEFAULT NULL,
-  `sample_overview` varchar(500) CHARACTER SET utf8 DEFAULT NULL,
-  `sample_description` text CHARACTER SET utf8,
-  `sample_slug` varchar(1000) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `sample_image` varchar(255) CHARACTER SET utf8 DEFAULT NULL,
+  `slideshow_id` int(11) DEFAULT NULL,
+  `post_name` varchar(500) CHARACTER SET utf8 DEFAULT NULL,
+  `post_slug` varchar(500) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `post_overview` varchar(1000) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `post_description` longtext COLLATE utf8_unicode_ci,
+  `post_image` varchar(255) CHARACTER SET utf8 DEFAULT NULL,
+  `post_files` varchar(10000) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `post_status` tinyint(4) DEFAULT NULL,
+  `cache_comments` text COLLATE utf8_unicode_ci,
+  `cache_other_posts` text COLLATE utf8_unicode_ci,
+  `cache_time` int(11) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`post_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+COMMIT;
 
---
--- Indexes for dumped tables
---
-
---
--- Indexes for table `samples`
---
-ALTER TABLE `samples`
-  ADD PRIMARY KEY (`sample_id`);
-
---
--- AUTO_INCREMENT for dumped tables
---
-
---
--- AUTO_INCREMENT for table `samples`
---
-ALTER TABLE `samples`
-  MODIFY `sample_id` int(11) NOT NULL AUTO_INCREMENT;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
