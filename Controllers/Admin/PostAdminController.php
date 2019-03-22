@@ -18,6 +18,7 @@ use Illuminate\Support\Facades\App;
 use Foostart\Category\Library\Controllers\FooController;
 use Foostart\Post\Models\Post;
 use Foostart\Category\Models\Category;
+use Foostart\Slideshow\Models\Slideshow;
 use Foostart\Post\Validators\PostValidator;
 
 
@@ -25,29 +26,35 @@ class PostAdminController extends FooController {
 
     public $obj_item = NULL;
     public $obj_category = NULL;
+    public $context = NULL;
+    public $categories = NULL;
+    public $slideshow = NULL;
 
-    public function __construct() {
+
+    public function __construct(Request $request) {
 
         parent::__construct();
-        // models
+
+        //models
         $this->obj_item = new Post(array('perPage' => 10));
         $this->obj_category = new Category();
+        $this->obj_slideshow = new Slideshow();
 
-        // validators
+        //validators
         $this->obj_validator = new PostValidator();
 
-        // set language files
+        //set language files
         $this->plang_admin = 'post-admin';
         $this->plang_front = 'post-front';
 
-        // package name
+        //package name
         $this->package_name = 'package-post';
         $this->package_base_name = 'post';
 
-        // root routers
+        //root routers
         $this->root_router = 'posts';
 
-        // page views
+        //page views
         $this->page_views = [
             'admin' => [
                 'items' => $this->package_name.'::admin.'.$this->package_base_name.'-items',
@@ -57,10 +64,23 @@ class PostAdminController extends FooController {
             ]
         ];
 
+        //get status item
         $this->data_view['status'] = $this->obj_item->getPluckStatus();
 
-        // //set category
+        //set category context
         $this->category_ref_name = 'admin/posts';
+
+        //get list of categories
+        $this->context = $this->obj_item->getContext($this->category_ref_name);
+        if ($this->context) {
+            $_params = [
+                'context_id' => $this->context->context_id
+            ];
+            $this->categories = $this->obj_category->pluckSelect($_params);
+        }
+        $this->data_view['categories'] = $this->categories;
+        $this->data_view['context'] = $this->context;
+        $this->data_view['slideshow'] = $this->obj_slideshow->pluckSelect();
 
     }
 
@@ -94,7 +114,6 @@ class PostAdminController extends FooController {
     public function edit(Request $request) {
 
         $item = NULL;
-        $categories = NULL;
 
         $params = $request->all();
         $params['id'] = $request->get('id', NULL);
@@ -111,19 +130,10 @@ class PostAdminController extends FooController {
             }
         }
 
-        //get categories by context
-        $context = $this->obj_item->getContext($this->category_ref_name);
-        if ($context) {
-            $params['context_id'] = $context->context_id;
-            $categories = $this->obj_category->pluckSelect($params);
-        }
-
         // display view
         $this->data_view = array_merge($this->data_view, array(
             'item' => $item,
-            'categories' => $categories,
             'request' => $request,
-            'context' => $context,
         ));
         return view($this->page_views['admin']['edit'], $this->data_view);
     }
@@ -152,8 +162,7 @@ class PostAdminController extends FooController {
 
                 if (!empty($item)) {
 
-                    $params['id'] = $id;
-                    $item = $this->obj_item->updateItem($params);
+                    $item = $this->obj_item->updateItem($params, $id);
 
                     // message
                     return Redirect::route($this->root_router.'.edit', ["id" => $item->id])
@@ -243,7 +252,11 @@ class PostAdminController extends FooController {
         $config_path = realpath(base_path('config/package-post.php'));
         $package_path = realpath(base_path('vendor/foostart/package-post'));
 
-        $config_bakup = realpath($package_path.'/storage/backup/config');
+        $config_bakup = $package_path.'/storage/backup/config';
+        if (!file_exists($config_bakup)) {
+            mkdir($config_bakup, 0755    , true);
+        }
+        $config_bakup = realpath($config_bakup);
 
         if ($version = $request->get('v')) {
             //load backup config
@@ -286,14 +299,20 @@ class PostAdminController extends FooController {
         // display view
         $langs = config('package-post.langs');
         $lang_paths = [];
+        $package_path = realpath(base_path('vendor/foostart/package-post'));
 
         if (!empty($langs) && is_array($langs)) {
             foreach ($langs as $key => $value) {
                 $lang_paths[$key] = realpath(base_path('resources/lang/'.$key.'/post-admin.php'));
+
+                $key_backup = $package_path.'/storage/backup/lang/'.$key;
+
+                if (!file_exists($key_backup)) {
+                    mkdir($key_backup, 0755    , true);
+                }
             }
         }
 
-        $package_path = realpath(base_path('vendor/foostart/package-post'));
 
         $lang_bakup = realpath($package_path.'/storage/backup/lang');
         $lang = $request->get('lang')?$request->get('lang'):'en';
@@ -379,12 +398,10 @@ class PostAdminController extends FooController {
             $item->id = NULL;
         }
 
-        $categories = $this->obj_category->pluckSelect($params);
 
         // display view
         $this->data_view = array_merge($this->data_view, array(
             'item' => $item,
-            'categories' => $categories,
             'request' => $request,
             'context' => $context,
         ));

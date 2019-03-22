@@ -3,9 +3,9 @@
     $withs = [
         'order' => '5%',
         'name' => '40%',
-        'updated_at' => '40%',
-        'operations' => '10%',
-        'delete' => '5%',
+        'updated_at' => '25%',
+        'operations' => '15%',
+        'delete' => '15%',
     ];
 
     global $counter;
@@ -45,10 +45,11 @@
                 </a>
             </th>
 
-            <!-- NAME -->
+            <!-- UPDATE -->
             <?php $name = 'updated_at' ?>
 
-            <th class="hidden-xs" style='width:{{ $withs['updated_at'] }}'>{!! trans($plang_admin.'.columns.updated_at') !!}
+            <th class="hidden-xs" style='width:{{ $withs['updated_at'] }}'>
+                {!! trans($plang_admin.'.columns.updated_at') !!}
                 <a href='{!! $sorting["url"][$name] !!}' class='tb-id' data-order='asc'>
                     @if($sorting['items'][$name] == 'asc')
                         <i class="fa fa-sort-alpha-asc" aria-hidden="true"></i>
@@ -66,13 +67,23 @@
                     {{ trans($plang_admin.'.columns.operations') }}
                 </span>
 
-                {!! Form::submit(trans($plang_admin.'.buttons.delete'), array("class"=>"btn btn-danger pull-right delete btn-delete-all del-trash", 'name'=>'del-trash')) !!}
-                {!! Form::submit(trans($plang_admin.'.buttons.delete'), array("class"=>"btn btn-warning pull-right delete btn-delete-all del-forever", 'name'=>'del-forever')) !!}
+                {!! Form::submit(trans($plang_admin.'.buttons.delete-in-trash'), array(
+                                                                            "class"=>"btn btn-danger pull-right delete btn-delete-all del-trash",
+                                                                            "title"=> trans($plang_admin.'.hint.delete-in-trash'),
+                                                                            'name'=>'del-trash'))
+                !!}
+                {!! Form::submit(trans($plang_admin.'.buttons.delete-forever'), array(
+                                                                            "class"=>"btn btn-warning pull-right delete btn-delete-all del-forever",
+                                                                            "title"=> trans($plang_admin.'.hint.delete-forever'),
+                                                                            'name'=>'del-forever'))
+                !!}
+            </th>
             </th>
 
             <!--DELETE-->
             <th style='width:{{ $withs['delete'] }}'>
                 <span class="del-checkbox pull-right">
+                    {!! trans($plang_admin.'.labels.delete') !!}
                     <input type="checkbox" id="selecctall" />
                     <label for="del-checkbox"></label>
                 </span>
@@ -92,17 +103,29 @@
                 <td> {!! $item->post_name !!} </td>
 
                 <!--UPDATED AT-->
-                <td> {!! $item->updated_at !!} </td>
+                <td> {!! date('d-m-Y H:i',strtotime($item->updated_at)) !!} </td>
 
                 <!--OPERATOR-->
                 <td>
+                    <!--comment-->
+                    @if(Route::has('comments.by_context'))
+                    <a href="{!! URL::route('comments.by_context', [   'id' => $item->id,
+                                                                       'context' => 'post',
+                                                                       '_token' => csrf_token()
+                                                            ])
+                            !!}">
+                        <i class="fa fa-commenting" aria-hidden="true"></i>
+                    </a>&nbsp;
+                    @endif
+
                     <!--edit-->
                     <a href="{!! URL::route('posts.edit', [   'id' => $item->id,
                                                                 '_token' => csrf_token()
                                                             ])
                             !!}">
                         <i class="fa fa-edit f-tb-icon"></i>
-                    </a>
+                    </a>&nbsp;
+
 
                     <!--copy-->
                     <a href="{!! URL::route('posts.copy',[    'cid' => $item->id,
@@ -111,16 +134,13 @@
                              !!}"
                         class="margin-left-5">
                         <i class="fa fa-files-o f-tb-icon" aria-hidden="true"></i>
-                    </a>
+                    </a>&nbsp;
 
-                    <!--delete-->
-                    <a href="{!! URL::route('posts.delete',[  'id' => $item->id,
-                                                                '_token' => csrf_token(),
-                                                              ])
-                             !!}"
-                       class="margin-left-5 delete">
-                        <i class="fa fa-trash-o f-tb-icon"></i>
-                    </a>
+                    <!--view on page-->
+                    <a href="{!! URL::to($item->category_slug.'/'.$item->post_slug.'-'.$item->post_id) !!}"
+                        class="margin-left-5">
+                        <i class="fa fa-files-o f-tb-icon" aria-hidden="true"></i>
+                    </a>&nbsp;
 
                 </td>
 
@@ -153,5 +173,5 @@
 
 @section('footer_scripts')
     @parent
-    {!! HTML::script('packages/foostart/package-post/js/form-table.js')  !!}
+    {!! HTML::script('packages/foostart/js/form-table.js')  !!}
 @stop

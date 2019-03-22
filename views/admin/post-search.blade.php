@@ -19,16 +19,24 @@
             <!-- KEYWORD -->
             @include('package-category::admin.partials.input_text', [
                 'name' => 'keyword',
-                'label' => trans($plang_admin.'.form.keyword'),
+                'label' => trans($plang_admin.'.labels.keyword'),
                 'value' => @$params['keyword'],
             ])
 
             <!-- STATUS -->
             @include('package-category::admin.partials.select_single', [
                 'name' => 'status',
-                'label' => trans($plang_admin.'.form.status'),
-                'value' => @$params['status']?$params['status']:'99',
+                'label' => trans($plang_admin.'.labels.status'),
+                'value' => @$params['status'],
                 'items' => $status,
+            ])
+
+            <!-- CATEGORIES -->
+            @include('package-category::admin.partials.select_single', [
+                'name' => 'category',
+                'label' => trans($plang_admin.'.labels.category'),
+                'value' => @$params['category'],
+                'items' => $categories,
             ])
 
             <!--SORTING-->
