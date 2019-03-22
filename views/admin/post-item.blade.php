@@ -139,7 +139,7 @@
                     <!--view on page-->
                     <a href="{!! URL::to($item->category_slug.'/'.$item->post_slug.'-'.$item->post_id) !!}"
                         class="margin-left-5">
-                        <i class="fa fa-files-o f-tb-icon" aria-hidden="true"></i>
+                        <i class="fa fa-eye" aria-hidden="true"></i>
                     </a>&nbsp;
 
                 </td>
