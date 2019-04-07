@@ -1,11 +1,10 @@
 @if(!empty($items) && (!$items->isEmpty()) )
 <?php
     $withs = [
-        'order' => '5%',
+        'order' => '10%',
         'name' => '40%',
         'updated_at' => '25%',
         'operations' => '15%',
-        'delete' => '15%',
     ];
 
     global $counter;
@@ -28,6 +27,10 @@
             <!--ORDER-->
             <th style='width:{{ $withs['order'] }}'>
                 {{ trans($plang_admin.'.columns.order') }}
+                <span class="del-checkbox pull-right">
+                    <input type="checkbox" id="selecctall" />
+                    <label for="del-checkbox"></label>
+                </span>
             </th>
 
             <!-- NAME -->
@@ -80,15 +83,6 @@
             </th>
             </th>
 
-            <!--DELETE-->
-            <th style='width:{{ $withs['delete'] }}'>
-                <span class="del-checkbox pull-right">
-                    {!! trans($plang_admin.'.labels.delete') !!}
-                    <input type="checkbox" id="selecctall" />
-                    <label for="del-checkbox"></label>
-                </span>
-            </th>
-
         </tr>
 
     </thead>
@@ -97,7 +91,13 @@
         @foreach($items as $item)
             <tr>
                 <!--COUNTER-->
-                <td> <?php echo $counter; $counter++ ?> </td>
+                <td>
+                    <?php echo $counter; $counter++ ?>
+                    <span class='box-item pull-right'>
+                        <input type="checkbox" id="<?php echo $item->id ?>" name="ids[]" value="{!! $item->id !!}">
+                        <label for="box-item"></label>
+                    </span>
+                </td>
 
                 <!--NAME-->
                 <td> {!! $item->post_name !!} </td>
@@ -136,20 +136,6 @@
                         <i class="fa fa-files-o f-tb-icon" aria-hidden="true"></i>
                     </a>&nbsp;
 
-                    <!--view on page-->
-                    <a href="{!! URL::to($item->category_slug.'/'.$item->post_slug.'-'.$item->post_id) !!}"
-                        class="margin-left-5">
-                        <i class="fa fa-eye" aria-hidden="true"></i>
-                    </a>&nbsp;
-
-                </td>
-
-                <!--DELETE-->
-                <td>
-                    <span class='box-item pull-right'>
-                        <input type="checkbox" id="<?php echo $item->id ?>" name="ids[]" value="{!! $item->id !!}">
-                        <label for="box-item"></label>
-                    </span>
                 </td>
 
             </tr>

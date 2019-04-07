@@ -251,6 +251,11 @@ class Post extends FooModel {
                                 $elo = $elo->where($this->table . '.category_id', '=', $value);
                             }
                             break;
+                        case 'category':
+                            if (!empty($value)) {
+                                $elo = $elo->where($this->table . '.category_id', '=', $value);
+                            }
+                            break;
                         case 'limit':
                             if (!empty($value)) {
                                 $elo = $elo->limit($value);
@@ -406,7 +411,7 @@ class Post extends FooModel {
                 'category' => $categories->category_id,
                 'is_pagination' => false
             ];
-            $categories->courses = $this->selectItems($_params);;
+            $categories->courses = $this->selectItems($_params);
 
             //get courses of category childs
             foreach ($categories->childs as $key => $category) {
@@ -432,4 +437,22 @@ class Post extends FooModel {
         return $courses;
     }
 
-}
+
+    public function getItemsByCategories($categories) {
+
+        $items = [];
+        $ids = [];
+
+        foreach ($categories as $category ) {
+            $ids = [$category->category_id => 1];
+            if (!empty($category->category_id_child_str)) {
+                $ids += (array) json_decode($category->category_id_child_str);
+            }
+        }
+        //Get list of items by ids
+        $items = $this->getCouresByCategoryIds(array_keys($ids));
+
+        return $items;
+    }
+
+    }

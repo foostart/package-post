@@ -35,9 +35,6 @@ View::composer([
         $plang_admin = 'post-admin';
         $plang_front = 'post-front';
 
-        $view->with('plang_admin', $plang_admin);
-        $view->with('plang_front', $plang_front);
-
         $fooCategory = new FooCategory();
         $key = $fooCategory->getContextKeyByRef('admin/posts');
 
