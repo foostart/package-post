@@ -258,6 +258,7 @@ class Post extends FooModel {
                             break;
                         case 'limit':
                             if (!empty($value)) {
+                                $this->perPage = $value;
                                 $elo = $elo->limit($value);
                             }
                             break;
@@ -444,7 +445,8 @@ class Post extends FooModel {
         $ids = [];
 
         foreach ($categories as $category ) {
-            $ids = [$category->category_id => 1];
+            $ids += [$category->category_id => 1];
+
             if (!empty($category->category_id_child_str)) {
                 $ids += (array) json_decode($category->category_id_child_str);
             }
