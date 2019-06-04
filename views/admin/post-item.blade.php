@@ -3,6 +3,7 @@
     $withs = [
         'order' => '10%',
         'name' => '40%',
+        'status' => '10%',
         'updated_at' => '25%',
         'operations' => '15%',
     ];
@@ -37,6 +38,21 @@
             <?php $name = 'post_name' ?>
 
             <th class="hidden-xs" style='width:{{ $withs['name'] }}'>{!! trans($plang_admin.'.columns.name') !!}
+                <a href='{!! $sorting["url"][$name] !!}' class='tb-id' data-order='asc'>
+                    @if($sorting['items'][$name] == 'asc')
+                        <i class="fa fa-sort-alpha-asc" aria-hidden="true"></i>
+                    @elseif($sorting['items'][$name] == 'desc')
+                        <i class="fa fa-sort-alpha-desc" aria-hidden="true"></i>
+                    @else
+                        <i class="fa fa-sort-desc" aria-hidden="true"></i>
+                    @endif
+                </a>
+            </th>
+            
+            <!--STATUS-->
+            <?php $name = 'post_status' ?>
+
+            <th class="hidden-xs" style='width:{{ $withs['status'] }}'>{!! trans($plang_admin.'.columns.post-status') !!}
                 <a href='{!! $sorting["url"][$name] !!}' class='tb-id' data-order='asc'>
                     @if($sorting['items'][$name] == 'asc')
                         <i class="fa fa-sort-alpha-asc" aria-hidden="true"></i>
@@ -101,6 +117,17 @@
 
                 <!--NAME-->
                 <td> {!! $item->post_name !!} </td>
+                
+                <!--STATUS-->
+                <td style="text-align: center;">
+
+                    <?php $status = config('package-category.status'); ?>
+                    @if($item->post_status && (isset($status['list'][$item->post_status])))
+                        <i class="fa fa-circle" style="color:{!! $status['color'][$item->post_status] !!}" title='{!! $status["list"][$item->post_status] !!}'></i>
+                    @else
+                    <i class="fa fa-circle-o red" title='{!! trans($plang_admin.".labels.unknown") !!}'></i>
+                    @endif
+                </td>
 
                 <!--UPDATED AT-->
                 <td> {!! date('d-m-Y H:i',strtotime($item->updated_at)) !!} </td>

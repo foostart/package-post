@@ -123,6 +123,7 @@ class Post extends FooModel {
             'limit',
             'post_id!',
             'category_id',
+            'user_id',
         ];
 
         //primary key
@@ -254,6 +255,11 @@ class Post extends FooModel {
                         case 'category':
                             if (!empty($value)) {
                                 $elo = $elo->where($this->table . '.category_id', '=', $value);
+                            }
+                            break;
+                        case 'user_id':
+                            if (!empty($value)) {
+                                $elo = $elo->where($this->table . '.user_id', '=', $value);
                             }
                             break;
                         case 'limit':
@@ -451,6 +457,7 @@ class Post extends FooModel {
                 $ids += (array) json_decode($category->category_id_child_str);
             }
         }
+
         //Get list of items by ids
         $items = $this->getCouresByCategoryIds(array_keys($ids));
 

@@ -72,6 +72,7 @@ View::composer([
             '' => trans($plang_admin.'.form.no-selected'),
             'id' => trans($plang_admin.'.fields.id'),
             'post_name' => trans($plang_admin.'.fields.name'),
+            'post_status' => trans($plang_admin.'.fields.status'),
             'updated_at' => trans($plang_admin.'.fields.updated_at'),
         ];
         $sortTable = new SortTable();

@@ -33,7 +33,7 @@ class PostServiceProvider extends ServiceProvider {
         $this->publishLang();
 
         // publish views
-        $this->publishViews();
+        //$this->publishViews();
 
         // publish assets
         $this->publishAssets();
