@@ -43,11 +43,11 @@
 
 ## Step 6: Add user
 
-unisharp\laravel-filemanager\src\Handlers\ConfigHandler.php
+foostart\laravel-filemanager\src\Handlers\ConfigHandler.php
 
 <?php
 
-namespace UniSharp\LaravelFilemanager\Handlers;
+namespace Foostart\Filemanager\Handlers;
 
 class ConfigHandler
 {
