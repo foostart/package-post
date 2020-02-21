@@ -22,10 +22,10 @@
 
 ## Step 2: Add service providers to config/app.php
 
-* Foostart\Post\PostServiceProvider::class,
-* Foostart\Slideshow\SlideshowServiceProvider::class,
-* UniSharp\LaravelFilemanager\LaravelFilemanagerServiceProvider::class,
-* Intervention\Image\ImageServiceProvider::class,
+    * Foostart\Post\PostServiceProvider::class,
+    * Foostart\Slideshow\SlideshowServiceProvider::class,
+    * Foostart\Filemanager\FilemanagerServiceProvider::class,
+    * Intervention\Image\ImageServiceProvider::class,
 
 ## Step 3: And add class aliases
 
