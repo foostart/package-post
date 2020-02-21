@@ -14,7 +14,8 @@
     ],
     "license": "MIT",
     "require": {
-        "foostart/package-slideshow": "*"
+        "foostart/package-slideshow": "*",
+        "foostart/package-filemanager": "*"
     },
     "autoload": {
         "psr-4": {
