@@ -1,9 +1,10 @@
-@webiste: http://foostart.com
+#Package Filemanager
 
-@package-name: sample
-@author: Kang
-@date: 27/12/2017
-@version: 2.0
+* @webiste: http://foostart.com
+* @package-name: package-filemanager
+* @author: Kang
+* @date: 27/12/2017
+* @version: 2.0
 
 @features
 
@@ -13,41 +14,34 @@
 4. Add filters on table data
 5. Add token for prevent XSRF
 
-php artisan vendor:publish --provider="Foostart\Post\PostServiceProvider" --force
+## Step 1: Install publish
 
-php artisan vendor:publish --provider="Foostart\Slideshow\SlideshowServiceProvider" --force
-
-
-Step 1: composer require unisharp/laravel-filemanager:~1.8
+* php artisan vendor:publish --provider="Foostart\Post\PostServiceProvider" --force
+* php artisan vendor:publish --provider="Foostart\Slideshow\SlideshowServiceProvider" --force
 
 
-Step 2: Add service providers
+## Step 2: Add service providers to config/app.php
 
- UniSharp\LaravelFilemanager\LaravelFilemanagerServiceProvider::class,
- Intervention\Image\ImageServiceProvider::class,
+* Foostart\Post\PostServiceProvider::class,
+* Foostart\Slideshow\SlideshowServiceProvider::class,
+* UniSharp\LaravelFilemanager\LaravelFilemanagerServiceProvider::class,
+* Intervention\Image\ImageServiceProvider::class,
 
-Step 3: And add class aliases
+## Step 3: And add class aliases
 
- 'Image' => Intervention\Image\Facades\Image::class,
+* 'Image' => Intervention\Image\Facades\Image::class,
 
-Step 4: Publish the package’s config and assets :
+## Step 4: Publish the package’s config and assets :
 
- php artisan vendor:publish --tag=lfm_config
- php artisan vendor:publish --tag=lfm_public
+* php artisan vendor:publish --tag=lfm_config
+* php artisan vendor:publish --tag=lfm_public
 
-Step 5: Clear cache
- php artisan route:clear
- php artisan config:clear
+## Step 5: Clear cache
+* php artisan route:clear
+* php artisan config:clear
+* php artisan storage:link
 
-Step 6:  php artisan storage:link
-
-Step 7: Clear auth
-
-
-lfm.php 
-clear auth
-
-Step 8: 
+## Step 6: Add user
 
 unisharp\laravel-filemanager\src\Handlers\ConfigHandler.php
 
