@@ -10,7 +10,7 @@ return [
     |
     */
     'menus' => [
-        'top-menu' => 'Rules'
+        'top-menu' => 'Post'
     ],
 
 
