@@ -121,7 +121,7 @@ class PostAdminController extends FooController {
             return redirect()->route('posts.list', ['user_id' => $user['user_id']]);
 
         }
-
+        
         $items = $this->obj_item->selectItems($params);
 
         // display view
