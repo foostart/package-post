@@ -14,18 +14,18 @@
 4. Add filters on table data
 5. Add token for prevent XSRF
 
-## Step 1: Install publish
-
-* php artisan vendor:publish --provider="Foostart\Post\PostServiceProvider" --force
-* php artisan vendor:publish --provider="Foostart\Slideshow\SlideshowServiceProvider" --force
-
-
-## Step 2: Add service providers to config/app.php
+## Step 1: Add service providers to config/app.php
 
     * Foostart\Post\PostServiceProvider::class,
     * Foostart\Slideshow\SlideshowServiceProvider::class,
     * Foostart\Filemanager\FilemanagerServiceProvider::class,
     * Intervention\Image\ImageServiceProvider::class,
+
+## Step 2: Install publish
+
+* php artisan vendor:publish --provider="Foostart\Post\PostServiceProvider" --force
+* php artisan vendor:publish --provider="Foostart\Slideshow\SlideshowServiceProvider" --force
+
 
 ## Step 3: And add class aliases
 
