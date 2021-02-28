@@ -10,7 +10,7 @@ return [
     |
     */
     'menus' => [
-        'top-menu' => 'Posts'
+        'top-menu' => 'Post'
     ],
 
 
@@ -52,6 +52,7 @@ return [
         'operations' => 'Operations',
         'updated_at' => 'Updated at',
         'filename' => 'File name',
+        'status' => 'Status',
     ],
 
 

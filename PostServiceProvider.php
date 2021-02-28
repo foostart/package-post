@@ -33,10 +33,16 @@ class PostServiceProvider extends ServiceProvider {
         $this->publishLang();
 
         // publish views
-        $this->publishViews();
+        //$this->publishViews();
 
         // publish assets
         $this->publishAssets();
+        
+        // public migrations
+        $this->publishMigrations();
+        
+        // public seeders
+        $this->publishSeeders();
 
     }
 
@@ -86,6 +92,28 @@ class PostServiceProvider extends ServiceProvider {
     protected function publishAssets() {
         $this->publishes([
             __DIR__ . '/public' => public_path('packages/foostart/package-post'),
+        ]);
+    }
+    
+    /**
+     * Publish migrations
+     * @source: foostart/package-post/database/migrations
+     * @destination: database/migrations
+     */
+    protected function publishMigrations() {        
+        $this->publishes([
+            __DIR__ . '/database/migrations' => $this->app->databasePath() . '/migrations',
+        ]);
+    }
+    
+    /**
+     * Publish seeders
+     * @source: foostart/package-post/database/seeders
+     * @destination: database/seeders
+     */
+    protected function publishSeeders() {        
+        $this->publishes([
+            __DIR__ . '/database/seeders' => $this->app->databasePath() . '/seeders',
         ]);
     }
 

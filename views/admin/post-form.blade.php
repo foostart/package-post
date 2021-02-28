@@ -114,7 +114,7 @@
                     @include('package-category::admin.partials.select_single', [
                         'name' => 'status',
                         'label' => trans($plang_admin.'.form.status'),
-                        'value' => @$item->post_status,
+                        'value' => @$item->status,
                         'items' => $status,
                         'description' => trans($plang_admin.'.descriptions.status'),
                     ])

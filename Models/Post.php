@@ -25,49 +25,26 @@ class Post extends FooModel {
         $this->table = 'posts';
 
         //list of field in table
-        $this->fillable = [
+        $this->fillable = array_merge($this->fillable, [
             'post_name',
             'post_slug',
-            'category_id',
-            'slideshow_id',
-            'user_id',
-            'user_full_name',
-            'user_email',
             'post_overview',
             'post_description',
             'post_image',
             'post_files',
-            'post_status',
-        ];
+            //Relation
+            'category_id',
+            'slideshow_id',
+        ]);
 
         //list of fields for inserting
-        $this->fields = [
+        $this->fields = array_merge($this->fields, [
             'post_name' => [
                 'name' => 'post_name',
                 'type' => 'Text',
             ],
             'post_slug' => [
                 'name' => 'post_slug',
-                'type' => 'Text',
-            ],
-            'category_id' => [
-                'name' => 'category_id',
-                'type' => 'Int',
-            ],
-            'slideshow_id' => [
-                'name' => 'slideshow_id',
-                'type' => 'Int',
-            ],
-            'user_id' => [
-                'name' => 'user_id',
-                'type' => 'Int',
-            ],
-            'user_full_name' => [
-                'name' => 'user_full_name',
-                'type' => 'Text',
-            ],
-            'user_email' => [
-                'name' => 'email',
                 'type' => 'Text',
             ],
             'post_overview' => [
@@ -86,27 +63,29 @@ class Post extends FooModel {
                 'name' => 'files',
                 'type' => 'Json',
             ],
-            'post_status' => [
-                'name' => 'status',
+            //Relation
+            'category_id' => [
+                'name' => 'category_id',
                 'type' => 'Int',
             ],
-        ];
+            'slideshow_id' => [
+                'name' => 'slideshow_id',
+                'type' => 'Int',
+            ],
+        ]);
 
         //check valid fields for inserting
-        $this->valid_insert_fields = [
+        $this->valid_insert_fields = array_merge($this->valid_insert_fields, [
             'post_name',
             'post_slug',
-            'user_id',
-            'category_id',
-            'slideshow_id',
-            'user_full_name',
-            'updated_at',
             'post_overview',
             'post_description',
             'post_image',
             'post_files',
-            'post_status',
-        ];
+            //Relation
+            'category_id',
+            'slideshow_id',
+        ]);
 
         //check valid fields for ordering
         $this->valid_ordering_fields = [
@@ -123,16 +102,11 @@ class Post extends FooModel {
             'limit',
             'post_id!',
             'category_id',
+            'user_id',
         ];
 
         //primary key
         $this->primaryKey = 'post_id';
-
-        //the number of items on page
-        $this->perPage = 10;
-
-        //item status
-        $this->field_status = 'post_status';
 
     }
 
@@ -256,6 +230,11 @@ class Post extends FooModel {
                                 $elo = $elo->where($this->table . '.category_id', '=', $value);
                             }
                             break;
+                        case 'user_id':
+                            if (!empty($value)) {
+                                $elo = $elo->where($this->table . '.user_id', '=', $value);
+                            }
+                            break;
                         case 'limit':
                             if (!empty($value)) {
                                 $this->perPage = $value;
@@ -287,8 +266,8 @@ class Post extends FooModel {
                 }
             }
         } elseif ($by_status) {
-
-            $elo = $elo->where($this->table . '.'.$this->field_status, '=', $this->status['publish']);
+            
+            $elo = $elo->where($this->table . '.'.$this->field_status, '=', $this->config_status['publish']);
 
         }
 
@@ -364,7 +343,7 @@ class Post extends FooModel {
 
         $dataFields = $this->getDataFields($params, $this->fields);
 
-        $dataFields[$this->field_status] = $this->status['publish'];
+        $dataFields[$this->field_status] = $this->config_status['publish'];
 
 
         $item = self::create($dataFields);
@@ -451,6 +430,7 @@ class Post extends FooModel {
                 $ids += (array) json_decode($category->category_id_child_str);
             }
         }
+
         //Get list of items by ids
         $items = $this->getCouresByCategoryIds(array_keys($ids));
 

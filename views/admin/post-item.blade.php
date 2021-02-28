@@ -3,13 +3,14 @@
     $withs = [
         'order' => '10%',
         'name' => '40%',
+        'status' => '10%',
         'updated_at' => '25%',
         'operations' => '15%',
     ];
 
     global $counter;
     $nav = $items->toArray();
-    $counter = ($nav['current_page'] - 1) * $nav['per_page'] + 1;
+    $counter = ($nav['current_page'] - 1) * $nav['per_page'] + 1;    
 ?>
 <caption>
     @if($nav['total'] == 1)
@@ -37,6 +38,21 @@
             <?php $name = 'post_name' ?>
 
             <th class="hidden-xs" style='width:{{ $withs['name'] }}'>{!! trans($plang_admin.'.columns.name') !!}
+                <a href='{!! $sorting["url"][$name] !!}' class='tb-id' data-order='asc'>
+                    @if($sorting['items'][$name] == 'asc')
+                        <i class="fa fa-sort-alpha-asc" aria-hidden="true"></i>
+                    @elseif($sorting['items'][$name] == 'desc')
+                        <i class="fa fa-sort-alpha-desc" aria-hidden="true"></i>
+                    @else
+                        <i class="fa fa-sort-desc" aria-hidden="true"></i>
+                    @endif
+                </a>
+            </th>
+            
+            <!--STATUS-->
+            <?php $name = 'status' ?>
+
+            <th class="hidden-xs text-center" style='width:{{ $withs['status'] }}'>{!! trans($plang_admin.'.columns.status') !!}
                 <a href='{!! $sorting["url"][$name] !!}' class='tb-id' data-order='asc'>
                     @if($sorting['items'][$name] == 'asc')
                         <i class="fa fa-sort-alpha-asc" aria-hidden="true"></i>
@@ -89,6 +105,7 @@
 
     <tbody>
         @foreach($items as $item)
+        
             <tr>
                 <!--COUNTER-->
                 <td>
@@ -101,6 +118,16 @@
 
                 <!--NAME-->
                 <td> {!! $item->post_name !!} </td>
+                
+                <!--STATUS-->
+                <td style="text-align: center;">
+
+                    @if($item->status && (isset($config_status['list'][$item->status])))
+                        <i class="fa fa-circle" style="color:{!! $config_status['color'][$item->status] !!}" title='{!! $config_status["list"][$item->status] !!}'></i>
+                    @else
+                    <i class="fa fa-circle-o red" title='{!! trans($plang_admin.".labels.unknown") !!}'></i>
+                    @endif
+                </td>
 
                 <!--UPDATED AT-->
                 <td> {!! date('d-m-Y H:i',strtotime($item->updated_at)) !!} </td>
@@ -135,6 +162,15 @@
                         class="margin-left-5">
                         <i class="fa fa-files-o f-tb-icon" aria-hidden="true"></i>
                     </a>&nbsp;
+                    
+                    <!--delete-->
+                    <a href="{!! URL::route('posts.delete',['id' => $item->id,
+                                                                '_token' => csrf_token(),
+                                                                 ])
+                             !!}"
+                       class="margin-left-5 delete">
+                        <i class="fa fa-trash-o f-tb-icon"></i>
+                    </a>
 
                 </td>
 

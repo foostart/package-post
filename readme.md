@@ -1,59 +1,56 @@
-@webiste: http://foostart.com
+# Package Filemanager
 
-@package-name: sample
-@author: Kang
-@date: 27/12/2017
-@version: 2.0
+* @webiste: http://foostart.com
+* @package-name: package-filemanager
+* @author: Kang
+* @date: 27/12/2017
+* @version: 2.0
 
-@features
+## Features
 
 1. CRUD
-2. Add category to form
-3. Language standard
-4. Add filters on table data
-5. Add token for prevent XSRF
+1. Add category to form
+1. Language standard
+1. Add filters on table data
+1. Add token for prevent XSRF
 
-php artisan vendor:publish --provider="Foostart\Post\PostServiceProvider" --force
+## Step 1: Add service providers to **config/app.php**
 
-php artisan vendor:publish --provider="Foostart\Slideshow\SlideshowServiceProvider" --force
+1. Foostart\Post\PostServiceProvider::class,
+1. Foostart\Slideshow\SlideshowServiceProvider::class,
+1. Foostart\Filemanager\FilemanagerServiceProvider::class,
+1. Intervention\Image\ImageServiceProvider::class,
 
+## Step 2: Add class aliases to **config/app.php**
 
-Step 1: composer require unisharp/laravel-filemanager:~1.8
+1. 'Image' => Intervention\Image\Facades\Image::class,
 
+## Step 3: Install publish
 
-Step 2: Add service providers
-
- UniSharp\LaravelFilemanager\LaravelFilemanagerServiceProvider::class,
- Intervention\Image\ImageServiceProvider::class,
-
-Step 3: And add class aliases
-
- 'Image' => Intervention\Image\Facades\Image::class,
-
-Step 4: Publish the package’s config and assets :
-
- php artisan vendor:publish --tag=lfm_config
- php artisan vendor:publish --tag=lfm_public
-
-Step 5: Clear cache
- php artisan route:clear
- php artisan config:clear
-
-Step 6:  php artisan storage:link
-
-Step 7: Clear auth
+1. php artisan vendor:publish --provider="Foostart\Post\PostServiceProvider" --force
+1. php artisan vendor:publish --provider="Foostart\Slideshow\SlideshowServiceProvider" --force
 
 
-lfm.php 
-clear auth
 
-Step 8: 
 
-unisharp\laravel-filemanager\src\Handlers\ConfigHandler.php
+## Step 4: Publish the package’s config and assets :
 
+1. php artisan vendor:publish --tag=lfm_config
+1. php artisan vendor:publish --tag=lfm_public
+
+## Step 5: Clear cache
+1. php artisan route:clear
+1. php artisan config:clear
+1. php artisan storage:link
+
+## Step 6: Add user
+
+foostart\laravel-filemanager\src\Handlers\ConfigHandler.php
+```
 <?php
 
-namespace UniSharp\LaravelFilemanager\Handlers;
+namespace Foostart\Filemanager\Handlers;
+
 
 class ConfigHandler
 {
@@ -69,3 +66,4 @@ class ConfigHandler
         return $user->id;
     }
 }
+```

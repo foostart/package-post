@@ -82,6 +82,13 @@ class PostAdminController extends FooController {
         $this->data_view['context'] = $this->context;
         $this->data_view['slideshow'] = $this->obj_slideshow->pluckSelect();
 
+
+        /**
+         * Breadcrumb
+         */
+        $this->breadcrumb_1['label'] = 'Admin';
+        $this->breadcrumb_2['label'] = 'Posts';
+
     }
 
     /**
@@ -91,8 +98,30 @@ class PostAdminController extends FooController {
      */
     public function index(Request $request) {
 
-        $params = $request->all();
+        /**
+         * Breadcrumb
+         */
+        $this->breadcrumb_3 = NULL;
 
+        /**
+         * Params
+         */
+        $params = $request->all();
+        $user = $this->getUser();
+
+        /**
+         * Get current user and ignore admin
+         */
+        $is_admin = $this->hasPermissions(array('_superadmin'));
+
+        if ($is_admin ) {
+
+        } else if (empty($params['user_id']) || ($params['user_id'] != $user['user_id'])) {
+
+            return redirect()->route('posts.list', ['user_id' => $user['user_id']]);
+
+        }
+        
         $items = $this->obj_item->selectItems($params);
 
         // display view
@@ -100,6 +129,12 @@ class PostAdminController extends FooController {
             'items' => $items,
             'request' => $request,
             'params' => $params,
+            'breadcrumb_1' => $this->breadcrumb_1,
+            'breadcrumb_2' => $this->breadcrumb_2,
+            'breadcrumb_3' => $this->breadcrumb_3,
+            'is_admin' => $is_admin,
+            'user_id' => $user['user_id'],
+            'config_status' => $this->obj_item->config_status
         ));
 
         return view($this->page_views['admin']['items'], $this->data_view);
@@ -113,11 +148,30 @@ class PostAdminController extends FooController {
      */
     public function edit(Request $request) {
 
+        /**
+         * Breadcrumb
+         */
+        $this->breadcrumb_3['label'] = 'Edit';
+
         $item = NULL;
 
+        /**
+         * Params
+         */
         $params = $request->all();
         $params['id'] = $request->get('id', NULL);
 
+        /**
+         * Get current user and ignore admin
+         */
+        $is_admin = $this->hasPermissions(array('_superadmin'));
+        $user = $this->getUser();
+
+        if ($is_admin) {
+
+        } else {
+            $params['user_id'] = $user['user_id'];
+        }
 
         //get item data by id
         if (!empty($params['id'])) {
@@ -134,6 +188,9 @@ class PostAdminController extends FooController {
         $this->data_view = array_merge($this->data_view, array(
             'item' => $item,
             'request' => $request,
+            'breadcrumb_1' => $this->breadcrumb_1,
+            'breadcrumb_2' => $this->breadcrumb_2,
+            'breadcrumb_3' => $this->breadcrumb_3,
         ));
         return view($this->page_views['admin']['edit'], $this->data_view);
     }
@@ -144,7 +201,7 @@ class PostAdminController extends FooController {
      * @date 27/12/2017
      */
     public function post(Request $request) {
-
+        
         $item = NULL;
 
         $params = array_merge($request->all(), $this->getUser());
@@ -247,6 +304,13 @@ class PostAdminController extends FooController {
      * @return view config page
      */
     public function config(Request $request) {
+
+
+        /**
+         * Breadcrumb
+         */
+        $this->breadcrumb_3['label'] = 'Config';
+
         $is_valid_request = $this->isValidRequest($request);
         // display view
         $config_path = realpath(base_path('config/package-post.php'));
@@ -283,6 +347,9 @@ class PostAdminController extends FooController {
             'request' => $request,
             'content' => $content,
             'backups' => $backups,
+            'breadcrumb_1' => $this->breadcrumb_1,
+            'breadcrumb_2' => $this->breadcrumb_2,
+            'breadcrumb_3' => $this->breadcrumb_3,
         ));
 
         return view($this->page_views['admin']['config'], $this->data_view);
@@ -295,6 +362,13 @@ class PostAdminController extends FooController {
      * @return view lang page
      */
     public function lang(Request $request) {
+
+
+        /**
+         * Breadcrumb
+         */
+        $this->breadcrumb_3['label'] = 'Lang';
+
         $is_valid_request = $this->isValidRequest($request);
         // display view
         $langs = config('package-post.langs');
@@ -366,6 +440,9 @@ class PostAdminController extends FooController {
             'langs'   => $langs,
             'lang_contents' => $lang_contents,
             'lang' => $lang,
+            'breadcrumb_1' => $this->breadcrumb_1,
+            'breadcrumb_2' => $this->breadcrumb_2,
+            'breadcrumb_3' => $this->breadcrumb_3,
         ));
 
         return view($this->page_views['admin']['lang'], $this->data_view);
@@ -378,6 +455,11 @@ class PostAdminController extends FooController {
      * @date 26/12/2017
      */
     public function copy(Request $request) {
+
+        /**
+         * Breadcrumb
+         */
+        $this->breadcrumb_3['label'] = 'Copy';
 
         $params = $request->all();
 
@@ -404,6 +486,9 @@ class PostAdminController extends FooController {
             'item' => $item,
             'request' => $request,
             'context' => $context,
+            'breadcrumb_1' => $this->breadcrumb_1,
+            'breadcrumb_2' => $this->breadcrumb_2,
+            'breadcrumb_3' => $this->breadcrumb_3,
         ));
 
         return view($this->page_views['admin']['edit'], $this->data_view);

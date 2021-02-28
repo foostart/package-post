@@ -1,4 +1,4 @@
-@extends('laravel-authentication-acl::admin.layouts.base-2cols')
+@extends('package-acl::admin.layouts.base-2cols')
 
 @section('title')
     {{ trans($plang_admin.'.pages.title-list') }}
@@ -23,7 +23,10 @@
 
                     <!--DESCRIPTION-->
                     <div class='panel-info panel-description'>
-                        {!! trans($plang_admin.'.descriptions.list') !!}</h4>
+                        {!! trans($plang_admin.'.descriptions.list') !!} <br>
+                        @if($is_admin)
+                        <p>You are admin, <a href="{!! Url::route('posts.list',['user_id' => $user_id]) !!}">click here</a> to view your created rules
+                        @endif
                     </div>
                     <!--/DESCRIPTION-->
 

@@ -26,7 +26,7 @@
             <!-- STATUS -->
             @include('package-category::admin.partials.select_single', [
                 'name' => 'status',
-                'label' => trans($plang_admin.'.labels.status'),
+                'label' => trans($plang_admin.'.columns.status'),
                 'value' => @$params['status'],
                 'items' => $status,
             ])
