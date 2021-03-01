@@ -1,6 +1,4 @@
-<?php
-
-namespace Foostart\Post\Controlers\User;
+<?php namespace Foostart\Post\Controllers\User;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
