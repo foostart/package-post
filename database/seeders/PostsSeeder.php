@@ -6,7 +6,7 @@ use Carbon\Carbon;
 
 class PostsSeeder extends FoostartSeeder
 {
-    protected $prefix_context = 'context_';
+
     public function __construct() {
         // Table name
         $this->table = 'posts';
