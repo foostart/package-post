@@ -8,14 +8,16 @@ use URL,
     Route;
 use Illuminate\Http\Request;
 
-class PostServiceProvider extends ServiceProvider {
+class PostServiceProvider extends ServiceProvider
+{
 
     /**
      * Bootstrap the application services.
      *
      * @return void
      */
-    public function boot(Request $request) {
+    public function boot(Request $request)
+    {
 
         //generate context key
 //        $this->generateContextKey();
@@ -37,10 +39,10 @@ class PostServiceProvider extends ServiceProvider {
 
         // publish assets
         $this->publishAssets();
-        
+
         // public migrations
         $this->publishMigrations();
-        
+
         // public seeders
         $this->publishSeeders();
 
@@ -51,7 +53,8 @@ class PostServiceProvider extends ServiceProvider {
      *
      * @return void
      */
-    public function register() {
+    public function register()
+    {
         include __DIR__ . '/routes.php';
     }
 
@@ -60,10 +63,11 @@ class PostServiceProvider extends ServiceProvider {
      * @source: vendor/foostart/package-post/config
      * @destination: config/
      */
-    protected function publishConfig() {
+    protected function publishConfig()
+    {
         $this->publishes([
             __DIR__ . '/config/package-post.php' => config_path('package-post.php'),
-                ], 'config');
+        ], 'config');
     }
 
     /**
@@ -71,7 +75,8 @@ class PostServiceProvider extends ServiceProvider {
      * @source: vendor/foostart/package-post/lang
      * @destination: resources/lang
      */
-    protected function publishLang() {
+    protected function publishLang()
+    {
         $this->publishes([
             __DIR__ . '/lang' => base_path('resources/lang'),
         ]);
@@ -82,36 +87,40 @@ class PostServiceProvider extends ServiceProvider {
      * @source: vendor/foostart/package-post/Views
      * @destination: resources/views/vendor/package-post
      */
-    protected function publishViews() {
+    protected function publishViews()
+    {
 
         $this->publishes([
             __DIR__ . '/Views' => base_path('resources/views/vendor/package-post'),
         ]);
     }
 
-    protected function publishAssets() {
+    protected function publishAssets()
+    {
         $this->publishes([
             __DIR__ . '/public' => public_path('packages/foostart/package-post'),
         ]);
     }
-    
+
     /**
      * Publish migrations
      * @source: foostart/package-post/database/migrations
      * @destination: database/migrations
      */
-    protected function publishMigrations() {        
+    protected function publishMigrations()
+    {
         $this->publishes([
             __DIR__ . '/database/migrations' => $this->app->databasePath() . '/migrations',
         ]);
     }
-    
+
     /**
      * Publish seeders
      * @source: foostart/package-post/database/seeders
      * @destination: database/seeders
      */
-    protected function publishSeeders() {        
+    protected function publishSeeders()
+    {
         $this->publishes([
             __DIR__ . '/database/seeders' => $this->app->databasePath() . '/seeders',
         ]);

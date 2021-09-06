@@ -33,7 +33,7 @@
                     @if( isset($message) )
                         <div class="panel-info alert alert-success flash-message">{!! $message !!}</div>
                     @endif
-                    <!--/MESSAGE-->
+                <!--/MESSAGE-->
 
                     <!--ERRORS-->
                     @if($errors && ! $errors->isEmpty() )
@@ -41,50 +41,50 @@
 
                             <div class="alert alert-danger flash-message">{!! $error !!}</div>
 
-                        @endforeach
-                    @endif
-                    <!--/ERRORS-->
+                    @endforeach
+                @endif
+                <!--/ERRORS-->
 
                     <!--BODY-->
                     <div class="panel-body">
                         {!! Form::open(['route'=>['posts.lang'], 'method' => 'post'])  !!}
 
-                            <div class='btn-form'>
+                        <div class='btn-form'>
 
-                                <!-- SAVE BUTTON -->
-                                {!! Form::submit(trans($plang_admin.'.buttons.save'), array("class"=>"btn btn-info pull-right ")) !!}
-                                <!-- /SAVE BUTTON -->
+                            <!-- SAVE BUTTON -->
+                        {!! Form::submit(trans($plang_admin.'.buttons.save'), array("class"=>"btn btn-info pull-right ")) !!}
+                        <!-- /SAVE BUTTON -->
 
-                            </div>
+                        </div>
 
                         <!--TAB MENU-->
                         @if(isset($langs))
-                        <ul class="nav nav-tabs">
+                            <ul class="nav nav-tabs">
                             @foreach($langs as $key => $value)
-                            <!--LANG TAB-->
-                            <li class="{!! ($key==$lang)?'active':'' !!}">
-                                <a data-toggle="tab" href="#{{$key}}">
-                                    {!! $value !!}
-                                </a>
-                            </li>
-                            @endforeach
-                        </ul>
+                                <!--LANG TAB-->
+                                    <li class="{!! ($key==$lang)?'active':'' !!}">
+                                        <a data-toggle="tab" href="#{{$key}}">
+                                            {!! $value !!}
+                                        </a>
+                                    </li>
+                                @endforeach
+                            </ul>
                         @endif
-                        <!--/TAB MENU-->
+                    <!--/TAB MENU-->
 
                         <div class="tab-content">
 
-                        <!--LANG CONTENT-->
-                        @foreach($lang_contents as $key => $content)
-                            <div id="{{$key}}" class="tab-pane fade {!! ($key==$lang)?'in active':'' !!}">
-                                {!! Form::textarea($key, $content, ['class' => 'form-control textarea-margin', 'size' => '30x50']) !!}
-                            </div>
-                        @endforeach
+                            <!--LANG CONTENT-->
+                            @foreach($lang_contents as $key => $content)
+                                <div id="{{$key}}" class="tab-pane fade {!! ($key==$lang)?'in active':'' !!}">
+                                    {!! Form::textarea($key, $content, ['class' => 'form-control textarea-margin', 'size' => '30x50']) !!}
+                                </div>
+                            @endforeach
 
                         </div>
 
 
-                            {!! Form::close() !!}
+                        {!! Form::close() !!}
                     </div>
                     <!--/BODY-->
 

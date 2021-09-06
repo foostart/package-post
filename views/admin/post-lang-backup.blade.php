@@ -10,40 +10,40 @@
         <table class="table table-hover">
 
             <thead>
-                <tr style="height: 50px;">
+            <tr style="height: 50px;">
 
-                    <!--VERSION-->
-                    <th style='width:10%'>
-                        {{ trans($plang_admin.'.columns.order') }}
-                    </th>
+                <!--VERSION-->
+                <th style='width:10%'>
+                    {{ trans($plang_admin.'.columns.order') }}
+                </th>
 
-                    <!--FILENAME-->
-                    <th style='width:90%'>
-                        {{ trans($plang_admin.'.columns.filename') }}
-                    </th>
+                <!--FILENAME-->
+                <th style='width:90%'>
+                    {{ trans($plang_admin.'.columns.filename') }}
+                </th>
 
 
-                </tr>
+            </tr>
 
             </thead>
 
             <tbody>
-                <?php
-                    $version = count($backups[$lang]);
-                    $other_backups = $backups;
-                    unset($other_backups[$lang]);
-                ?>
-                @foreach($backups[$lang] as $index => $backup)
+            <?php
+            $version = count($backups[$lang]);
+            $other_backups = $backups;
+            unset($other_backups[$lang]);
+            ?>
+            @foreach($backups[$lang] as $index => $backup)
                 <tr>
                     <!--COUNTER-->
                     <td> {!! 'v.'.$version; $version-- !!}  </td>
 
                     <!--NAME-->
                     <?php
-                    $group_backup = "$lang=".realpath($backup);
+                    $group_backup = "$lang=" . realpath($backup);
                     foreach ($other_backups as $key => $other_backup) {
                         foreach ($other_backup as $_backup) {
-                            $group_backup .= ";$key=".realpath($other_backup[$index]);
+                            $group_backup .= ";$key=" . realpath($other_backup[$index]);
                             break;
                         }
                     }
@@ -55,7 +55,7 @@
                     </td>
 
                 </tr>
-                @endforeach
+            @endforeach
 
             </tbody>
 

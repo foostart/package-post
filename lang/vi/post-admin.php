@@ -14,9 +14,6 @@ return [
     ],
 
 
-
-
-
     /*
     |-----------------------------------------------------------------------
     | SIDEBAR
@@ -34,9 +31,6 @@ return [
         'lang' => 'Languages',
         'category' => 'Categories',
     ],
-
-
-
 
 
     /*
@@ -73,9 +67,6 @@ return [
     ],
 
 
-
-
-
     /*
     |-----------------------------------------------------------------------
     | Button
@@ -92,9 +83,6 @@ return [
     ],
 
 
-
-
-
     /*
     |-----------------------------------------------------------------------
     | Form
@@ -109,9 +97,6 @@ return [
         'no-selected' => 'No selected',
         'status' => 'Status',
     ],
-
-
-
 
 
     /*
@@ -142,7 +127,6 @@ return [
     ],
 
 
-
     /*
     |-----------------------------------------------------------------------
     | Error
@@ -155,10 +139,8 @@ return [
     'errors' => [
         'required' => ':attribute is required',
         'required_length' => '<b> :attribute </b> allows from: <b>:minlength</b> to <b>:maxlength</b> characters.',
-        'required_min_length' =>'<b> :attribute </b> allows from: <b>:minlength</b> characters.',
+        'required_min_length' => '<b> :attribute </b> allows from: <b>:minlength</b> characters.',
     ],
-
-
 
 
     /*
@@ -178,8 +160,6 @@ return [
         'slug' => 'Slug',
         'updated_at' => 'Updated at'
     ],
-
-
 
 
     /*
@@ -211,9 +191,6 @@ return [
     ],
 
 
-
-
-
     /*
     |-----------------------------------------------------------------------
     | TABS
@@ -234,14 +211,11 @@ return [
         'menu_8' => 'Menu 8',
         'menu_9' => 'Menu 9',
         'menu_9' => 'Menu 9',
-        'guide'  => 'Guide',
-        'other'  => 'Other',
-        'basic'  => 'Basic',
+        'guide' => 'Guide',
+        'other' => 'Other',
+        'basic' => 'Basic',
         'advance' => 'Advance',
     ],
-
-
-
 
 
     /*
@@ -260,9 +234,6 @@ return [
     ],
 
 
-
-
-
     /*
     |-----------------------------------------------------------------------
     | CONFIRMS
@@ -275,9 +246,6 @@ return [
     'confirms' => [
         'delete' => 'Are you sure you want to delete this item?',
     ],
-
-
-
 
 
     /*

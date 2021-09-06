@@ -31,27 +31,28 @@
 1. php artisan vendor:publish --provider="Foostart\Post\PostServiceProvider" --force
 1. php artisan vendor:publish --provider="Foostart\Slideshow\SlideshowServiceProvider" --force
 
-
-
-
 ## Step 4: Publish the package’s config and assets :
 
 1. php artisan vendor:publish --tag=lfm_config
 1. php artisan vendor:publish --tag=lfm_public
 
 ## Step 5: Clear cache
+
 1. php artisan route:clear
 1. php artisan config:clear
 1. php artisan storage:link
 
 ## Step 6: Migrate and Seeder
+
 Run the following
+
 1. php artisan migrate
 1. php artisan db:seed
 
 ## Step 7: Add user
 
 foostart\laravel-filemanager\src\Handlers\ConfigHandler.php
+
 ```
 <?php
 

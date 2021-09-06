@@ -1,5 +1,5 @@
 @if(!empty($items) && (!$items->isEmpty()) )
-<?php
+    <?php
     $withs = [
         'order' => '10%',
         'name' => '40%',
@@ -10,26 +10,26 @@
 
     global $counter;
     $nav = $items->toArray();
-    $counter = ($nav['current_page'] - 1) * $nav['per_page'] + 1;    
-?>
-<caption>
-    @if($nav['total'] == 1)
-        {!! trans($plang_admin.'.descriptions.counter', ['number' => $nav['total']]) !!}
-    @else
-        {!! trans($plang_admin.'.descriptions.counters', ['number' => $nav['total']]) !!}
-    @endif
-</caption>
+    $counter = ($nav['current_page'] - 1) * $nav['per_page'] + 1;
+    ?>
+    <caption>
+        @if($nav['total'] == 1)
+            {!! trans($plang_admin.'.descriptions.counter', ['number' => $nav['total']]) !!}
+        @else
+            {!! trans($plang_admin.'.descriptions.counters', ['number' => $nav['total']]) !!}
+        @endif
+    </caption>
 
-<table class="table table-hover">
+    <table class="table table-hover">
 
-    <thead>
+        <thead>
         <tr style="height: 50px;">
 
             <!--ORDER-->
             <th style='width:{{ $withs['order'] }}'>
                 {{ trans($plang_admin.'.columns.order') }}
                 <span class="del-checkbox pull-right">
-                    <input type="checkbox" id="selecctall" />
+                    <input type="checkbox" id="selecctall"/>
                     <label for="del-checkbox"></label>
                 </span>
             </th>
@@ -48,11 +48,12 @@
                     @endif
                 </a>
             </th>
-            
+
             <!--STATUS-->
             <?php $name = 'status' ?>
 
-            <th class="hidden-xs text-center" style='width:{{ $withs['status'] }}'>{!! trans($plang_admin.'.columns.status') !!}
+            <th class="hidden-xs text-center"
+                style='width:{{ $withs['status'] }}'>{!! trans($plang_admin.'.columns.status') !!}
                 <a href='{!! $sorting["url"][$name] !!}' class='tb-id' data-order='asc'>
                     @if($sorting['items'][$name] == 'asc')
                         <i class="fa fa-sort-alpha-asc" aria-hidden="true"></i>
@@ -101,11 +102,11 @@
 
         </tr>
 
-    </thead>
+        </thead>
 
-    <tbody>
+        <tbody>
         @foreach($items as $item)
-        
+
             <tr>
                 <!--COUNTER-->
                 <td>
@@ -118,14 +119,15 @@
 
                 <!--NAME-->
                 <td> {!! $item->post_name !!} </td>
-                
+
                 <!--STATUS-->
                 <td style="text-align: center;">
 
                     @if($item->status && (isset($config_status['list'][$item->status])))
-                        <i class="fa fa-circle" style="color:{!! $config_status['color'][$item->status] !!}" title='{!! $config_status["list"][$item->status] !!}'></i>
+                        <i class="fa fa-circle" style="color:{!! $config_status['color'][$item->status] !!}"
+                           title='{!! $config_status["list"][$item->status] !!}'></i>
                     @else
-                    <i class="fa fa-circle-o red" title='{!! trans($plang_admin.".labels.unknown") !!}'></i>
+                        <i class="fa fa-circle-o red" title='{!! trans($plang_admin.".labels.unknown") !!}'></i>
                     @endif
                 </td>
 
@@ -136,16 +138,16 @@
                 <td>
                     <!--comment-->
                     @if(Route::has('comments.by_context'))
-                    <a href="{!! URL::route('comments.by_context', [   'id' => $item->id,
+                        <a href="{!! URL::route('comments.by_context', [   'id' => $item->id,
                                                                        'context' => 'post',
                                                                        '_token' => csrf_token()
                                                             ])
                             !!}">
-                        <i class="fa fa-commenting" aria-hidden="true"></i>
-                    </a>&nbsp;
-                    @endif
+                            <i class="fa fa-commenting" aria-hidden="true"></i>
+                        </a>&nbsp;
+                @endif
 
-                    <!--edit-->
+                <!--edit-->
                     <a href="{!! URL::route('posts.edit', [   'id' => $item->id,
                                                                 '_token' => csrf_token()
                                                             ])
@@ -159,10 +161,10 @@
                                                                 '_token' => csrf_token(),
                                                             ])
                              !!}"
-                        class="margin-left-5">
+                       class="margin-left-5">
                         <i class="fa fa-files-o f-tb-icon" aria-hidden="true"></i>
                     </a>&nbsp;
-                    
+
                     <!--delete-->
                     <a href="{!! URL::route('posts.delete',['id' => $item->id,
                                                                 '_token' => csrf_token(),
@@ -177,12 +179,12 @@
             </tr>
         @endforeach
 
-    </tbody>
+        </tbody>
 
-</table>
-<div class="paginator">
-    {!! $items->appends($request->except(['page']) )->render() !!}
-</div>
+    </table>
+    <div class="paginator">
+        {!! $items->appends($request->except(['page']) )->render() !!}
+    </div>
 @else
     <!--SEARCH RESULT MESSAGE-->
     <span class="text-warning">

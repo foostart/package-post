@@ -10,26 +10,26 @@
         <table class="table table-hover">
 
             <thead>
-                <tr style="height: 50px;">
+            <tr style="height: 50px;">
 
-                    <!--VERSION-->
-                    <th style='width:10%'>
-                        {{ trans($plang_admin.'.columns.order') }}
-                    </th>
+                <!--VERSION-->
+                <th style='width:10%'>
+                    {{ trans($plang_admin.'.columns.order') }}
+                </th>
 
-                    <!--FILENAME-->
-                    <th style='width:90%'>
-                        {{ trans($plang_admin.'.columns.filename') }}
-                    </th>
+                <!--FILENAME-->
+                <th style='width:90%'>
+                    {{ trans($plang_admin.'.columns.filename') }}
+                </th>
 
 
-                </tr>
+            </tr>
 
             </thead>
 
             <tbody>
-                <?php $version = count($backups) ?>
-                @foreach($backups as  $backup)
+            <?php $version = count($backups) ?>
+            @foreach($backups as  $backup)
                 <tr>
                     <!--COUNTER-->
                     <td> {!! 'v.'.$version; $version-- !!}  </td>
@@ -42,7 +42,7 @@
                     </td>
 
                 </tr>
-                @endforeach
+            @endforeach
 
             </tbody>
 

@@ -32,7 +32,7 @@
                     @if( isset($message) )
                         <div class="panel-info alert alert-success flash-message">{!! $message !!}</div>
                     @endif
-                    <!--/MESSAGE-->
+                <!--/MESSAGE-->
 
                     <!--ERRORS-->
                     @if($errors && ! $errors->isEmpty() )
@@ -40,26 +40,26 @@
 
                             <div class="alert alert-danger flash-message">{!! $error !!}</div>
 
-                        @endforeach
-                    @endif
-                    <!--/ERRORS-->
+                    @endforeach
+                @endif
+                <!--/ERRORS-->
 
                     <!--BODY-->
                     <div class="panel-body">
                         {!! Form::open(['route'=>['posts.config'], 'method' => 'post'])  !!}
 
-                            <div class='btn-form'>
+                        <div class='btn-form'>
 
-                                <!-- SAVE BUTTON -->
-                                {!! Form::submit(trans($plang_admin.'.buttons.save'), array("class"=>"btn btn-info pull-right ")) !!}
-                                <!-- /SAVE BUTTON -->
+                            <!-- SAVE BUTTON -->
+                        {!! Form::submit(trans($plang_admin.'.buttons.save'), array("class"=>"btn btn-info pull-right ")) !!}
+                        <!-- /SAVE BUTTON -->
 
-                            </div>
+                        </div>
 
-                            {!! Form::label('content', trans($plang_admin.'.labels.config')) !!}
-                            {!! Form::textarea('content', $content, ['class' => 'form-control textarea-margin', 'size' => '30x50']) !!}
+                        {!! Form::label('content', trans($plang_admin.'.labels.config')) !!}
+                        {!! Form::textarea('content', $content, ['class' => 'form-control textarea-margin', 'size' => '30x50']) !!}
 
-                            {!! Form::close() !!}
+                        {!! Form::close() !!}
                     </div>
                     <!--/BODY-->
 

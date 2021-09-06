@@ -25,7 +25,8 @@
                     <div class='panel-info panel-description'>
                         {!! trans($plang_admin.'.descriptions.list') !!} <br>
                         @if($is_admin)
-                        <p>You are admin, <a href="{!! Url::route('posts.list',['user_id' => $user_id]) !!}">click here</a> to view your created rules
+                            <p>You are admin, <a href="{!! Url::route('posts.list',['user_id' => $user_id]) !!}">click
+                                    here</a> to view your created rules
                         @endif
                     </div>
                     <!--/DESCRIPTION-->
@@ -35,7 +36,7 @@
                     @if( isset($message) )
                         <div class="panel-info alert alert-success flash-message">{!! $message !!}</div>
                     @endif
-                    <!--/MESSAGE-->
+                <!--/MESSAGE-->
 
                     <!--ERRORS-->
                     @if($errors && ! $errors->isEmpty() )
@@ -43,17 +44,17 @@
 
                             <div class="alert alert-danger flash-message">{!! $error !!}</div>
 
-                        @endforeach
-                    @endif
-                    <!--/ERRORS-->
+                    @endforeach
+                @endif
+                <!--/ERRORS-->
 
                     <!--BODY-->
                     <div class="panel-body">
                         {!! Form::open(['route'=>['posts.delete', 'id' => @$item->id], 'method' => 'get'])  !!}
 
-                            @include('package-post::admin.post-item')
+                        @include('package-post::admin.post-item')
 
-                            {!! csrf_field(); !!}
+                        {!! csrf_field(); !!}
 
                         {!! Form::close() !!}
                     </div>

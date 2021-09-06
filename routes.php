@@ -17,8 +17,8 @@ Route::get('post', [
 Route::group(['middleware' => ['web']], function () {
 
     Route::group(['middleware' => ['admin_logged', 'can_see', 'in_context'],
-                  'namespace' => 'Foostart\Post\Controllers\Admin',
-        ], function () {
+        'namespace' => 'Foostart\Post\Controllers\Admin',
+    ], function () {
 
         /*
           |-----------------------------------------------------------------------
@@ -76,14 +76,14 @@ Route::group(['middleware' => ['web']], function () {
         /**
          * trash
          */
-         Route::get('admin/posts/trash', [
+        Route::get('admin/posts/trash', [
             'as' => 'posts.trash',
             'uses' => 'PostAdminController@trash'
         ]);
 
         /**
          * configs
-        */
+         */
         Route::get('admin/posts/config', [
             'as' => 'posts.config',
             'uses' => 'PostAdminController@config'
@@ -96,7 +96,7 @@ Route::group(['middleware' => ['web']], function () {
 
         /**
          * language
-        */
+         */
         Route::get('admin/posts/lang', [
             'as' => 'posts.lang',
             'uses' => 'PostAdminController@lang'

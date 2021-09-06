@@ -32,12 +32,11 @@ class PostValidator extends FooValidator
         $this->lang_admin = 'post-admin';
 
         // event listening
-        Event::listen('validating', function($input)
-        {
+        Event::listen('validating', function ($input) {
             self::$messages = [
-                'post_name.required'          => trans($this->lang_admin.'.errors.required', ['attribute' => trans($this->lang_admin.'.fields.name')]),
-                'post_overview.required'      => trans($this->lang_admin.'.errors.required', ['attribute' => trans($this->lang_admin.'.fields.overview')]),
-                'post_description.required'   => trans($this->lang_admin.'.errors.required', ['attribute' => trans($this->lang_admin.'.fields.description')]),
+                'post_name.required' => trans($this->lang_admin . '.errors.required', ['attribute' => trans($this->lang_admin . '.fields.name')]),
+                'post_overview.required' => trans($this->lang_admin . '.errors.required', ['attribute' => trans($this->lang_admin . '.fields.overview')]),
+                'post_description.required' => trans($this->lang_admin . '.errors.required', ['attribute' => trans($this->lang_admin . '.fields.description')]),
             ];
         });
 
@@ -49,7 +48,8 @@ class PostValidator extends FooValidator
      * @param ARRAY $input is form data
      * @return type
      */
-    public function validate($input) {
+    public function validate($input)
+    {
 
         $flag = parent::validate($input);
         $this->errors = $this->errors ? $this->errors : new MessageBag();
@@ -60,19 +60,19 @@ class PostValidator extends FooValidator
         $params = [
             'name' => [
                 'key' => 'post_name',
-                'label' => trans($this->lang_admin.'.fields.name'),
+                'label' => trans($this->lang_admin . '.fields.name'),
                 'min' => $_ln['post_name']['min'],
                 'max' => $_ln['post_name']['max'],
             ],
             'overview' => [
                 'key' => 'post_overview',
-                'label' => trans($this->lang_admin.'.fields.overview'),
+                'label' => trans($this->lang_admin . '.fields.overview'),
                 'min' => $_ln['post_overview']['min'],
                 'max' => $_ln['post_overview']['max'],
             ],
             'description' => [
                 'key' => 'post_description',
-                'label' => trans($this->lang_admin.'.fields.description'),
+                'label' => trans($this->lang_admin . '.fields.description'),
                 'min' => $_ln['post_description']['min'],
                 'max' => $_ln['post_description']['max'],
             ],
@@ -90,7 +90,8 @@ class PostValidator extends FooValidator
      * Load configuration
      * @return ARRAY $configs list of configurations
      */
-    public function loadConfigs(){
+    public function loadConfigs()
+    {
 
         $configs = config('package-post');
         return $configs;

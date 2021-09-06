@@ -11,7 +11,9 @@ use Foostart\Sample\Models\Samples;
 class PostUserController extends Controller
 {
     public $data = array();
-    public function __construct() {
+
+    public function __construct()
+    {
 
     }
 

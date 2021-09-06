@@ -4,14 +4,17 @@ use Foostart\Category\Library\Models\FooModel;
 use Illuminate\Database\Eloquent\Model;
 use Foostart\Comment\Models\Comment;
 
-class Post extends FooModel {
+class Post extends FooModel
+{
 
     /**
      * @table categories
      * @param array $attributes
      */
     public $user = NULL;
-    public function __construct(array $attributes = array()) {
+
+    public function __construct(array $attributes = array())
+    {
         //set configurations
         $this->setConfigs();
 
@@ -19,7 +22,8 @@ class Post extends FooModel {
 
     }
 
-    public function setConfigs() {
+    public function setConfigs()
+    {
 
         //table name
         $this->table = 'posts';
@@ -115,7 +119,8 @@ class Post extends FooModel {
      * @param type $params
      * @return object list of categories
      */
-    public function selectItems($params = array()) {
+    public function selectItems($params = array())
+    {
 
         //join to another tables
         $elo = $this->joinTable();
@@ -144,13 +149,14 @@ class Post extends FooModel {
      * @param ARRAY $params list of parameters
      * @return OBJECT post
      */
-    public function selectItem($params = array(), $key = NULL) {
+    public function selectItem($params = array(), $key = NULL)
+    {
 
 
         if (empty($key)) {
             $key = $this->primaryKey;
         }
-       //join to another tables
+        //join to another tables
         $elo = $this->joinTable();
 
         //search filters
@@ -169,7 +175,8 @@ class Post extends FooModel {
     }
 
 
-    public function getComments($post_id) {
+    public function getComments($post_id)
+    {
 
         // Get post
         $params = array(
@@ -200,7 +207,8 @@ class Post extends FooModel {
      * @param ARRAY $params list of parameters
      * @return ELOQUENT OBJECT
      */
-    protected function joinTable(array $params = []){
+    protected function joinTable(array $params = [])
+    {
         return $this;
     }
 
@@ -209,17 +217,14 @@ class Post extends FooModel {
      * @param ARRAY $params list of parameters
      * @return ELOQUENT OBJECT
      */
-    protected function searchFilters(array $params = [], $elo, $by_status = TRUE){
+    protected function searchFilters(array $params, $elo, $by_status = TRUE)
+    {
 
         //filter
-        if ($this->isValidFilters($params) && (!empty($params)))
-        {
-            foreach($params as $column => $value)
-            {
-                if($this->isValidValue($value))
-                {
-                    switch($column)
-                    {
+        if ($this->isValidFilters($params) && (!empty($params))) {
+            foreach ($params as $column => $value) {
+                if ($this->isValidValue($value)) {
+                    switch ($column) {
                         case 'category_id':
                             if (!empty($value)) {
                                 $elo = $elo->where($this->table . '.category_id', '=', $value);
@@ -248,15 +253,15 @@ class Post extends FooModel {
                             break;
                         case 'status':
                             if (!empty($value)) {
-                                $elo = $elo->where($this->table . '.'.$this->field_status, '=', $value);
+                                $elo = $elo->where($this->table . '.' . $this->field_status, '=', $value);
                             }
                             break;
                         case 'keyword':
                             if (!empty($value)) {
-                                $elo = $elo->where(function($elo) use ($value) {
+                                $elo = $elo->where(function ($elo) use ($value) {
                                     $elo->where($this->table . '.post_name', 'LIKE', "%{$value}%")
-                                    ->orWhere($this->table . '.post_description','LIKE', "%{$value}%")
-                                    ->orWhere($this->table . '.post_overview','LIKE', "%{$value}%");
+                                        ->orWhere($this->table . '.post_description', 'LIKE', "%{$value}%")
+                                        ->orWhere($this->table . '.post_overview', 'LIKE', "%{$value}%");
                                 });
                             }
                             break;
@@ -266,8 +271,8 @@ class Post extends FooModel {
                 }
             }
         } elseif ($by_status) {
-            
-            $elo = $elo->where($this->table . '.'.$this->field_status, '=', $this->config_status['publish']);
+
+            $elo = $elo->where($this->table . '.' . $this->field_status, '=', $this->config_status['publish']);
 
         }
 
@@ -279,11 +284,12 @@ class Post extends FooModel {
      * @param ELOQUENT OBJECT
      * @return ELOQUENT OBJECT
      */
-    public function createSelect($elo) {
+    public function createSelect($elo)
+    {
 
         $elo = $elo->select($this->table . '.*',
-                            $this->table . '.post_id as id'
-                );
+            $this->table . '.post_id as id'
+        );
 
         return $elo;
     }
@@ -293,7 +299,8 @@ class Post extends FooModel {
      * @param ARRAY $params list of parameters
      * @return ELOQUENT OBJECT
      */
-    public function paginateItems(array $params = [], $elo) {
+    public function paginateItems(array $params, $elo)
+    {
         $items = $elo->paginate($this->perPage);
 
         return $items;
@@ -305,7 +312,8 @@ class Post extends FooModel {
      * @param INT $id is primary key
      * @return type
      */
-    public function updateItem($params = [], $id = NULL) {
+    public function updateItem($params = [], $id = NULL)
+    {
 
         if (empty($id)) {
             $id = $params['id'];
@@ -339,7 +347,8 @@ class Post extends FooModel {
      * @param ARRAY $params list of parameters
      * @return OBJECT post
      */
-    public function insertItem($params = []) {
+    public function insertItem($params = [])
+    {
 
         $dataFields = $this->getDataFields($params, $this->fields);
 
@@ -360,7 +369,8 @@ class Post extends FooModel {
      * @param ARRAY $input list of parameters
      * @return boolean TRUE incase delete successfully otherwise return FALSE
      */
-    public function deleteItem($input = [], $delete_type) {
+    public function deleteItem(?array $input, $delete_type)
+    {
 
         $item = $this->find($input['id']);
 
@@ -379,7 +389,8 @@ class Post extends FooModel {
         return FALSE;
     }
 
-    public function getCoursesByCategoriesRoot($categories) {
+    public function getCoursesByCategoriesRoot($categories)
+    {
 
         $this->is_pagination = false;
 
@@ -411,23 +422,25 @@ class Post extends FooModel {
         return $categories;
     }
 
-    public function getCouresByCategoryIds($ids) {
+    public function getCouresByCategoryIds($ids)
+    {
         $courses = self::whereIn('category_id', $ids)
-                    ->paginate($this->perPage);
+            ->paginate($this->perPage);
         return $courses;
     }
 
 
-    public function getItemsByCategories($categories) {
+    public function getItemsByCategories($categories)
+    {
 
         $items = [];
         $ids = [];
 
-        foreach ($categories as $category ) {
+        foreach ($categories as $category) {
             $ids += [$category->category_id => 1];
 
             if (!empty($category->category_id_child_str)) {
-                $ids += (array) json_decode($category->category_id_child_str);
+                $ids += (array)json_decode($category->category_id_child_str);
             }
         }
 
@@ -437,4 +450,4 @@ class Post extends FooModel {
         return $items;
     }
 
-    }
+}
