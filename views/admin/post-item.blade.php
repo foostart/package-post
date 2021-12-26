@@ -1,7 +1,7 @@
 @if(!empty($items) && (!$items->isEmpty()) )
     <?php
     $withs = [
-        'order' => '10%',
+        'order' => '5%',
         'name' => '40%',
         'status' => '10%',
         'updated_at' => '25%',
@@ -12,13 +12,25 @@
     $nav = $items->toArray();
     $counter = ($nav['current_page'] - 1) * $nav['per_page'] + 1;
     ?>
-    <caption>
+    <div class="btn-delete-top">
+        <div>
         @if($nav['total'] == 1)
             {!! trans($plang_admin.'.descriptions.counter', ['number' => $nav['total']]) !!}
         @else
             {!! trans($plang_admin.'.descriptions.counters', ['number' => $nav['total']]) !!}
         @endif
-    </caption>
+        </div>
+        {!! Form::submit(trans($plang_admin.'.buttons.delete-in-trash'), array(
+                                                                "class"=>"btn btn-danger delete btn-delete-all del-trash",
+                                                                "title"=> trans($plang_admin.'.hint.delete-in-trash'),
+                                                                'name'=>'del-trash'))
+        !!}
+        {!! Form::submit(trans($plang_admin.'.buttons.delete-forever'), array(
+                                                                    "class"=>"btn btn-warning delete btn-delete-all del-forever",
+                                                                    "title"=> trans($plang_admin.'.hint.delete-forever'),
+                                                                    'name'=>'del-forever'))
+        !!}
+    </div>
 
     <table class="table table-hover">
 
@@ -86,17 +98,6 @@
                 <span class='lb-delete-all'>
                     {{ trans($plang_admin.'.columns.operations') }}
                 </span>
-
-                {!! Form::submit(trans($plang_admin.'.buttons.delete-in-trash'), array(
-                                                                            "class"=>"btn btn-danger pull-right delete btn-delete-all del-trash",
-                                                                            "title"=> trans($plang_admin.'.hint.delete-in-trash'),
-                                                                            'name'=>'del-trash'))
-                !!}
-                {!! Form::submit(trans($plang_admin.'.buttons.delete-forever'), array(
-                                                                            "class"=>"btn btn-warning pull-right delete btn-delete-all del-forever",
-                                                                            "title"=> trans($plang_admin.'.hint.delete-forever'),
-                                                                            'name'=>'del-forever'))
-                !!}
             </th>
             </th>
 
