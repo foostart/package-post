@@ -10,7 +10,7 @@ return [
     |
     */
     'menus' => [
-        'top-menu' => 'Posts'
+        'top-menu' => 'Post'
     ],
 
 
@@ -46,6 +46,7 @@ return [
         'operations' => 'Operations',
         'updated_at' => 'Updated at',
         'filename' => 'File name',
+        'status' => 'Status',
     ],
 
 
@@ -80,6 +81,21 @@ return [
         'add' => 'Add',
         'save' => 'Save',
         'delete' => 'Delete',
+        'delete-in-trash' => 'In trash',
+        'delete-forever' => 'Forever',
+    ],
+
+
+    /*
+    |-----------------------------------------------------------------------
+    | Hint
+    |-----------------------------------------------------------------------
+    | The list of hint
+    |
+    */
+    'hint' => [
+        'delete-forever' => 'Delete forever',
+        'delete-in-trash' => 'Delete in trash',
     ],
 
 
@@ -101,9 +117,9 @@ return [
 
     /*
     |-----------------------------------------------------------------------
-    | Description
+    | Descriptions
     |-----------------------------------------------------------------------
-    | Description
+    | Descriptions
     |
     */
     'descriptions' => [

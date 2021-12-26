@@ -84,13 +84,6 @@ class PostAdminController extends FooController
         $this->data_view['context'] = $this->context;
         $this->data_view['slideshow'] = $this->obj_slideshow->pluckSelect();
 
-
-        /**
-         * Breadcrumb
-         */
-        $this->breadcrumb_1['label'] = 'Admin';
-        $this->breadcrumb_2['label'] = 'Posts';
-
     }
 
     /**
@@ -100,12 +93,6 @@ class PostAdminController extends FooController
      */
     public function index(Request $request)
     {
-
-        /**
-         * Breadcrumb
-         */
-        $this->breadcrumb_3 = NULL;
-
         /**
          * Params
          */
@@ -132,9 +119,6 @@ class PostAdminController extends FooController
             'items' => $items,
             'request' => $request,
             'params' => $params,
-            'breadcrumb_1' => $this->breadcrumb_1,
-            'breadcrumb_2' => $this->breadcrumb_2,
-            'breadcrumb_3' => $this->breadcrumb_3,
             'is_admin' => $is_admin,
             'user_id' => $user['user_id'],
             'config_status' => $this->obj_item->config_status
@@ -151,12 +135,6 @@ class PostAdminController extends FooController
      */
     public function edit(Request $request)
     {
-
-        /**
-         * Breadcrumb
-         */
-        $this->breadcrumb_3['label'] = 'Edit';
-
         $item = NULL;
 
         /**
@@ -192,9 +170,6 @@ class PostAdminController extends FooController
         $this->data_view = array_merge($this->data_view, array(
             'item' => $item,
             'request' => $request,
-            'breadcrumb_1' => $this->breadcrumb_1,
-            'breadcrumb_2' => $this->breadcrumb_2,
-            'breadcrumb_3' => $this->breadcrumb_3,
         ));
         return view($this->page_views['admin']['edit'], $this->data_view);
     }
@@ -354,9 +329,6 @@ class PostAdminController extends FooController
             'request' => $request,
             'content' => $content,
             'backups' => $backups,
-            'breadcrumb_1' => $this->breadcrumb_1,
-            'breadcrumb_2' => $this->breadcrumb_2,
-            'breadcrumb_3' => $this->breadcrumb_3,
         ));
 
         return view($this->page_views['admin']['config'], $this->data_view);
@@ -370,8 +342,6 @@ class PostAdminController extends FooController
      */
     public function lang(Request $request)
     {
-
-
         /**
          * Breadcrumb
          */
@@ -448,9 +418,6 @@ class PostAdminController extends FooController
             'langs' => $langs,
             'lang_contents' => $lang_contents,
             'lang' => $lang,
-            'breadcrumb_1' => $this->breadcrumb_1,
-            'breadcrumb_2' => $this->breadcrumb_2,
-            'breadcrumb_3' => $this->breadcrumb_3,
         ));
 
         return view($this->page_views['admin']['lang'], $this->data_view);
@@ -495,13 +462,8 @@ class PostAdminController extends FooController
             'item' => $item,
             'request' => $request,
             'context' => $context,
-            'breadcrumb_1' => $this->breadcrumb_1,
-            'breadcrumb_2' => $this->breadcrumb_2,
-            'breadcrumb_3' => $this->breadcrumb_3,
         ));
 
         return view($this->page_views['admin']['edit'], $this->data_view);
     }
-
-
 }

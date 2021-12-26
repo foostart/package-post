@@ -73,7 +73,7 @@
         'description' => trans($plang_admin.'.descriptions.slug'),
         'errors' => $errors,
     ])
-    <!--/POST NAME-->
+    <!--/POST SLUG-->
 
         <div class="row">
 
@@ -154,14 +154,14 @@
     <!--OTHER-->
     <div id="menu_3" class="tab-pane fade">
         <!--POST IMAGE-->
-    @include('package-category::admin.partials.input_image', [
-    'name' => 'post_image',
-    'label' => trans($plang_admin.'.labels.image'),
-    'value' => @$item->post_image,
-    'description' => trans($plang_admin.'.descriptions.image'),
-    'errors' => $errors,
-    ])
-    <!--/POST IMAGE-->
+        @include('package-category::admin.partials.input_image', [
+            'name' => 'post_image',
+            'label' => trans($plang_admin.'.labels.image'),
+            'value' => @$item->post_image,
+            'description' => trans($plang_admin.'.descriptions.image'),
+            'errors' => $errors,
+        ])
+        <!--/POST IMAGE-->
 
         <!--POST FILES-->
     @include('package-category::admin.partials.input_files', [
