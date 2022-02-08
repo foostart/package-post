@@ -7,7 +7,7 @@
 @section('content')
 
     <div class="row">
-        <div class="col-md-12">
+
 
             <!--LIST OF ITEMS-->
             <div class="col-md-9">
@@ -70,7 +70,7 @@
             </div>
             <!--/SEARCH-->
 
-        </div>
+
     </div>
 @stop
 

@@ -12,8 +12,8 @@
            class="btn btn-danger pull-right margin-left-5 delete">
             {!! trans($plang_admin.'.buttons.delete') !!}
         </a>
-@endif
-<!-- DELETE BUTTON -->
+    @endif
+    <!-- DELETE BUTTON -->
 
     <!-- SAVE BUTTON -->
 {!! Form::submit(trans($plang_admin.'.buttons.save'), array("class"=>"btn btn-info pull-right ")) !!}
