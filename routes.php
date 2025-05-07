@@ -85,12 +85,12 @@ Route::group(['middleware' => ['web']], function () {
          * configs
          */
         Route::get('admin/posts/config', [
-            'as' => 'posts.config',
+            'as' => 'posts.configGet',
             'uses' => 'PostAdminController@config'
         ]);
 
         Route::post('admin/posts/config', [
-            'as' => 'posts.config',
+            'as' => 'posts.configPost',
             'uses' => 'PostAdminController@config'
         ]);
 
@@ -98,12 +98,12 @@ Route::group(['middleware' => ['web']], function () {
          * language
          */
         Route::get('admin/posts/lang', [
-            'as' => 'posts.lang',
+            'as' => 'posts.langGet',
             'uses' => 'PostAdminController@lang'
         ]);
 
         Route::post('admin/posts/lang', [
-            'as' => 'posts.lang',
+            'as' => 'posts.langPost',
             'uses' => 'PostAdminController@lang'
         ]);
 

@@ -237,7 +237,7 @@ class Post extends FooModel
                             break;
                         case 'user_id':
                             if (!empty($value)) {
-                                $elo = $elo->where($this->table . '.user_id', '=', $value);
+                                $elo = $elo->where($this->table . '.created_user_id', '=', $value);
                             }
                             break;
                         case 'limit':
@@ -328,7 +328,9 @@ class Post extends FooModel
 
         if (!empty($post)) {
             $dataFields = $this->getDataFields($params, $this->fields);
-
+            if (!empty($dataFields['created_user_id'])) {
+                unset($dataFields['created_user_id']);
+            }
             foreach ($dataFields as $key => $value) {
                 $post->$key = $value;
             }

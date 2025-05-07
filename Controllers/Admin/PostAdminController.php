@@ -111,6 +111,7 @@ class PostAdminController extends FooController
             return redirect()->route('posts.list', ['user_id' => $user['user_id']]);
 
         }
+        $params['is_admin'] = $is_admin;
 
         $items = $this->obj_item->selectItems($params);
 
@@ -170,6 +171,7 @@ class PostAdminController extends FooController
         $this->data_view = array_merge($this->data_view, array(
             'item' => $item,
             'request' => $request,
+            'user_id' => $user['user_id']
         ));
         return view($this->page_views['admin']['edit'], $this->data_view);
     }
@@ -184,7 +186,7 @@ class PostAdminController extends FooController
 
         $item = NULL;
 
-        $params = array_merge($request->all(), $this->getUser());
+        $params = array_merge($this->getUser(), $request->all());
 
         $is_valid_request = $this->isValidRequest($request);
 
@@ -432,6 +434,7 @@ class PostAdminController extends FooController
     public function copy(Request $request)
     {
 
+        $user = $this->getUser();
         /**
          * Breadcrumb
          */
@@ -462,6 +465,7 @@ class PostAdminController extends FooController
             'item' => $item,
             'request' => $request,
             'context' => $context,
+            'user_id'  => $user['user_id']
         ));
 
         return view($this->page_views['admin']['edit'], $this->data_view);
