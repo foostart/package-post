@@ -46,20 +46,19 @@
 
                     <!--BODY-->
                     <div class="panel-body">
-                        {!! Form::open(['route'=>['posts.config'], 'method' => 'post'])  !!}
+                        {!! html()->form('POST', route('posts.config'))->open() !!}
 
                         <div class='btn-form'>
 
                             <!-- SAVE BUTTON -->
-                        {!! Form::submit(trans($plang_admin.'.buttons.save'), array("class"=>"btn btn-info pull-right ")) !!}
-                        <!-- /SAVE BUTTON -->
+                            {!! html()->submit(trans($plang_admin.'.buttons.save'))->class('btn btn-info pull-right') !!}
+                            <!-- /SAVE BUTTON -->
 
                         </div>
 
-                        {!! Form::label('content', trans($plang_admin.'.labels.config')) !!}
-                        {!! Form::textarea('content', $content, ['class' => 'form-control textarea-margin', 'size' => '30x50']) !!}
-
-                        {!! Form::close() !!}
+                        {!! html()->label(trans($plang_admin.'.labels.config'))->for('content') !!}
+                        {!! html()->textarea('content', $content)->class('form-control textarea-margin')->attribute('size', '30x50') !!}
+                        {!! html()->closeForm() !!}
                     </div>
                     <!--/BODY-->
 

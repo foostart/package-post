@@ -50,13 +50,16 @@
 
                     <!--BODY-->
                     <div class="panel-body">
-                        {!! Form::open(['route'=>['posts.delete', 'id' => @$item->id], 'method' => 'get'])  !!}
+                        {!! html()->form('GET', route('posts.delete', ['id' => @$item->id]))
+                            ->open()
+                            !!}
+
 
                         @include('package-post::admin.post-item')
 
                         {!! csrf_field(); !!}
 
-                        {!! Form::close() !!}
+                        {!! html()->form()->close() !!}
                     </div>
                     <!--/BODY-->
 
