@@ -6,7 +6,12 @@
     </div>
     <div class="panel-body">
 
-        {!! html()->form('GET', route('posts.list'))->open() !!}
+        <!-- FORM OPEN -->
+        @include('package-category::admin.partials.form_open', [
+            'method' => 'GET',
+            'action' => route('posts.list'),
+        ])
+
 
         <!--BUTTONS-->
         <div class="form-group">
@@ -44,10 +49,17 @@
         @include('package-category::admin.partials.sorting')
 
         <div class='hidden-field'>
-            {!! html()->hidden('context', $request->get('context', null)) !!}
+            @include('package-category::admin.partials.input_text', [
+                'hidden' => true,
+                'name'   => 'context',
+                'id'     => 'context',
+                'value'  => $request->get('context', null)
+            ])
+
             {!! csrf_field() !!}
         </div>
 
-        {!! html()->form()->close() !!}
+        <!-- FORM CLOSE -->
+        @include('package-category::admin.partials.form_close')
     </div>
 </div>

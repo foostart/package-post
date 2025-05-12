@@ -47,7 +47,12 @@
 
                     <!--BODY-->
                     <div class="panel-body">
-                        {!! html()->form('POST', route('posts.lang'))->open() !!}
+                        <!-- FORM OPEN -->
+                        @include('package-category::admin.partials.form_open', [
+                            'method' => 'POST',
+                            'action' => route('posts.lang'),
+                        ])
+
                         <div class='btn-form'>
 
                             <!-- SAVE BUTTON -->
@@ -83,7 +88,8 @@
                         </div>
 
 
-                        {!! html()->form()->close() !!}
+                        <!-- FORM CLOSE -->
+                        @include('package-category::admin.partials.form_close')
                     </div>
                     <!--/BODY-->
 
