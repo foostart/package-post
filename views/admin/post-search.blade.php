@@ -19,7 +19,12 @@
                class="btn btn-default search-reset">
                 {!! trans($plang_admin.'.buttons.reset') !!}
             </a>
-            {!! html()->button(trans($plang_admin.'.buttons.search'))->type('submit')->class('btn btn-info')->id('search-submit') !!}
+            @include('package-category::admin.partials.btn_submit', [
+               'label' => trans($plang_admin.'.buttons.search'),
+               'class' => 'btn btn-info',
+               'id' => 'search-submit',
+           ])
+
         </div>
 
         <!-- KEYWORD -->
