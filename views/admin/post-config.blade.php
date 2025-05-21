@@ -65,8 +65,15 @@
 
                         </div>
 
-                        {!! html()->label(trans($plang_admin.'.labels.config'))->for('content') !!}
-                        {!! html()->textarea('content', $content)->class('form-control textarea-margin')->attribute('size', '30x50') !!}
+                        @include('package-category::admin.partials.textarea', [
+                            'name' => 'content',
+                            'label' => trans($plang_admin.'.labels.config'),
+                            'value' => $content,
+                            'class' => 'form-control textarea-margin',
+                            'cols' => 30,
+                            'rows' => 50,
+                        ])
+
                         <!-- FORM CLOSE -->
                         @include('package-category::admin.partials.form_close')
                     </div>

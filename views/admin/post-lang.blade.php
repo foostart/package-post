@@ -81,7 +81,13 @@
                             <!--LANG CONTENT-->
                             @foreach($lang_contents as $key => $content)
                                 <div id="{{$key}}" class="tab-pane fade {!! ($key==$lang)?'in active':'' !!}">
-                                    {!! html()->textarea($key, $content)->class('form-control textarea-margin')->attribute('size', '30x50') !!}
+                                    @include('package-category::admin.partials.textarea', [
+                                        'name' => $key,
+                                        'value' => $content,
+                                        'class' => 'form-control textarea-margin',
+                                        'cols' => 30,
+                                        'rows' => 50,
+                                    ])
                                 </div>
                             @endforeach
 
